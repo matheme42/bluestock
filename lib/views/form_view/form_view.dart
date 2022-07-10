@@ -1,0 +1,108 @@
+import 'package:bluestock/context/context.dart';
+import 'package:bluestock/database/inventory_controller.dart';
+import 'package:bluestock/database/models/inventory.dart';
+import 'package:bluestock/database/models/site.dart';
+import 'package:bluestock/database/models/zone.dart';
+import 'package:bluestock/database/site_controller.dart';
+import 'package:bluestock/database/zone_controller.dart';
+import 'package:bluestock/views/form_view/form_body.dart';
+import 'package:bluestock/views/helper/file_format.dart';
+import 'package:bluestock/views/helper/popup.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
+void inventoryNewPopup(BuildContext context) {
+  showAnimatedDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return NewInventoryForm();
+    },
+    animationType: DialogTransitionType.size,
+    curve: Curves.fastOutSlowIn,
+    duration: const Duration(seconds: 1),
+  );
+}
+
+class CustomValidator {
+  static String? required(dynamic value) {
+    if (value == null ||
+        value == false ||
+        ((value is Iterable || value is String || value is Map) &&
+            value.length == 0)) {
+      return "doit etre renseigné";
+    }
+    return null;
+  }
+}
+
+
+class NewInventoryForm extends StatelessWidget {
+  NewInventoryForm({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+  final ValueNotifier submitted = ValueNotifier(false);
+
+  void submit(Inventory inventory, BuildContext context) async {
+    inventory = await InventoryController().insert(inventory);
+    Site newSite = Site();
+    newSite.region = inventory.site.region;
+    newSite.name = inventory.site.name;
+    newSite = await SiteController().insert(newSite, inventory);
+    for (var zone in inventory.site.zones) {
+      var newZone = Zone();
+      newZone.name = zone.name;
+      newZone.num = zone.num;
+      newSite.zones.add(await ZoneController().insert(newZone, newSite));
+    }
+    inventory.site = newSite;
+    // ignore: use_build_context_synchronously
+    BluestockContext.of(context).inventories.add(inventory);
+    // ignore: use_build_context_synchronously
+    BluestockContext.of(context).currentInventory.value = inventory;
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Inventory inventory = Inventory();
+    return Form(
+      key: _formKey,
+      child: Scaffold(
+        backgroundColor: const Color(0xFF112473),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: const Text('nouvel inventaire'),
+          actions: [
+            IconButton(
+                onPressed: () => helpPopup(context, const HelpFileFormat()),
+                icon: const Icon(
+                  Icons.help,
+                  color: Colors.white70,
+                ))
+          ],
+        ),
+        body: FormBody(inventory: inventory),
+        bottomNavigationBar: Card(
+          color: Colors.transparent,
+          elevation: 3,
+          child: ListTile(
+            onTap: () {
+              if (submitted.value == true) return ;
+              if (_formKey.currentState!.validate()) {
+                submitted.value = true;
+                submit(inventory, context);
+              }
+            },
+            title: const Text(
+              'Créer',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white),
+            ),
+            visualDensity: const VisualDensity(vertical: -4),
+          ),
+        ),
+      ),
+    );
+  }
+}
