@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 
@@ -95,7 +96,6 @@ class RootObserverState extends State<RootObserver>
 class Root<T extends ChangeNotifier> extends StatelessWidget {
   /// personnalisation
   final String title;
-  final ThemeMode? themeMode;
   final ThemeData? darkTheme;
   final ThemeData? theme;
 
@@ -129,11 +129,11 @@ class Root<T extends ChangeNotifier> extends StatelessWidget {
 
   /// AppContext
   final T appContext;
+  final Translations translations;
 
   // ignore: use_key_in_widget_constructors
   const Root({
     required this.title,
-    this.themeMode,
     this.theme,
     this.darkTheme,
     required this.routes,
@@ -154,6 +154,7 @@ class Root<T extends ChangeNotifier> extends StatelessWidget {
     this.onUnknownRoute,
     required this.appContext,
     this.onGenerateRoute,
+    required this.translations,
   }) : assert((onLoading != null && onLoadingScreen != null) ||
             onLoading == null);
 
@@ -164,10 +165,9 @@ class Root<T extends ChangeNotifier> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool globalKeyboardIsVisible = false;
-    return MaterialApp(
+    return GetMaterialApp(
         title: title,
         routes: routes,
-        themeMode: themeMode,
         theme: theme,
         darkTheme: darkTheme,
         showPerformanceOverlay: showPerformanceOverlay,
@@ -177,6 +177,7 @@ class Root<T extends ChangeNotifier> extends StatelessWidget {
         localizationsDelegates: localizationsDelegates,
         initialRoute: initialRoute,
         locale: locale,
+        translations: translations,
         onGenerateRoute: onGenerateRoute,
         onUnknownRoute: onUnknownRoute,
         debugShowCheckedModeBanner: debugShowCheckedModeBanner,

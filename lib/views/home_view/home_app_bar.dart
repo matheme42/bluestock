@@ -5,13 +5,14 @@ import 'package:bluestock/views/helper/inventaire.dart';
 import 'package:bluestock/views/helper/popup.dart';
 import 'package:bluestock/views/inventory_view/inventory_resume.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomAppBar {
   static AppBar home(BuildContext context) {
     BluestockContext appContext = BluestockContext.of(context);
     return AppBar(
       backgroundColor: Colors.transparent,
-      title: const Text('Bluestock'),
+      title: Text('title'.tr),
       actions: [
         ValueListenableBuilder<bool>(
             valueListenable: appContext.cguAccepted,
@@ -52,10 +53,14 @@ class CustomAppBar {
             onPressed: () => inventoryResumePopup(
                 context, BluestockContext.of(context).currentInventory.value!),
             icon: const Icon(Icons.article_outlined)),
-        IconButton(onPressed: (){
-          helpPopup(context, const HelpInventaire());
-        },
-            icon: const Icon(Icons.help, color: Colors.white,)),
+        IconButton(
+            onPressed: () {
+              helpPopup(context, const HelpInventaire());
+            },
+            icon: const Icon(
+              Icons.help,
+              color: Colors.white,
+            )),
       ],
     );
   }

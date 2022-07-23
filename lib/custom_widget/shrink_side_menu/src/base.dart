@@ -103,9 +103,9 @@ class SideMenu extends StatelessWidget {
   Matrix4 _getMatrix4(Size size) {
     if (opened.value) {
       return Matrix4.identity()
-        ..rotateZ(degToRad(-5.0 * _inverse))
+        ..rotateZ(degToRad(-2.0 * _inverse))
         ..translate(min(size.width, maxMenuWidth) * _inverse,
-            (size.height * 0.15))
+            (size.height * 0.12))
         ..invertRotation();
     }
     return Matrix4.identity();

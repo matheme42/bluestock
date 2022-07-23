@@ -1,6 +1,4 @@
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Créer class Singleton

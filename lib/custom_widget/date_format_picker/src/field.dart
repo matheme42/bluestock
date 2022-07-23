@@ -204,7 +204,6 @@ class DateTimeField extends StatelessWidget {
   ) {
     return showDatePicker(
       context: context,
-      locale : const Locale("fr","FR"),
       initialDatePickerMode: initialDatePickerMode!,
       initialDate: initialDateTime,
       initialEntryMode: initialEntryMode,

@@ -1,4 +1,3 @@
-import 'package:bluestock/database/models/article.dart';
 import 'package:bluestock/database/models/inventory.dart';
 import 'package:bluestock/database/models/site.dart';
 import 'package:bluestock/database/models/zone.dart';

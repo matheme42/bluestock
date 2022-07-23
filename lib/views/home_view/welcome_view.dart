@@ -8,10 +8,11 @@ import 'package:bluestock/views/home_view/conditons_generale.dart';
 import 'package:bluestock/views/home_view/home_app_bar.dart';
 import 'package:bluestock/views/inventory_view/inventory_resume.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class WelcomePage extends StatelessWidget {
+  const WelcomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -95,11 +96,11 @@ class HomePage extends StatelessWidget {
         valueListenable: BluestockContext.of(context).cguAccepted,
         child: ListTile(
           onTap: () => conditonsGeneralePopup(context),
-          title: const AutoSizeText(
-            'Tous droits reservés 2021',
+          title: AutoSizeText(
+            'all_right'.tr,
             maxLines: 1,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           leading: const Padding(
             padding: EdgeInsets.all(8.0),

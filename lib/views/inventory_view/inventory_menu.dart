@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bluestock/context/context.dart';
 import 'package:bluestock/dart/import.dart';
-import 'package:bluestock/database/inventory_controller.dart';
 import 'package:bluestock/database/models/inventory.dart';
 import 'package:bluestock/database/models/site.dart';
 import 'package:bluestock/database/models/zone.dart';
