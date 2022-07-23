@@ -13,20 +13,6 @@ class HelpInventaire extends StatelessWidget {
   final _contentStyle = const TextStyle(
       color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
 
-  Future<void> exportSiteExempleFile() async {
-    final directory = await getApplicationDocumentsDirectory();
-    final path = directory.path;
-    final file = File('$path/article_exemple.csv');
-    if (await file.exists()) {
-      file.delete();
-    }
-    String line = "process,code produit,Dénomination commerciale,DCI,Dénomination interne,Famille,Sous-famille,Unité de comptage,Référence marque / laboratoire,Code Barre/Qrcode\n";
-    await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
-    line = "*,doit etre unique,*,*,*,*,*,*,*,*\n";
-    await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
-    await Share.shareFiles([file.path], text: "Fichier d'exemple site.csv");
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -62,34 +48,8 @@ class HelpInventaire extends StatelessWidget {
               header: const Text("resumé de l'inventaire",
                   style: TextStyle(color: Colors.white70)),
               content: Text(
-                'Donne la liste complete des articles déjà ajoutés à chaque zone',
+                'Donne la liste complete des articles déjà ajoutés dans chaque zone',
                 style: _contentStyle,),
-              contentHorizontalPadding: 20,
-              contentBorderWidth: 1,
-            ),
-            AccordionSection(
-              isOpen: false,
-              leftIcon: const Icon(Icons.upload_file, color: Colors.white),
-              headerBackgroundColor: Colors.blue,
-              headerBackgroundColorOpened: Colors.deepPurple,
-              header: const Text('importer des articles',
-                  style: TextStyle(color: Colors.white70)),
-              content: Column(
-                children: [
-                  Text(
-                      "cliquer sur 'importer des articles'.\n"
-                          "puis cliquer sur le fichier CSV séparateur ',' correspondant a la liste de vos articles\n\n"
-                          "Retouver un fichier d'exemple ci-dessous\n",
-                      style: _contentStyle),
-                  MaterialButton(
-                      color: Colors.deepPurple,
-                      child: const Text("article_exemple.csv", style: TextStyle(
-                          color: Colors.white70
-                      ),),
-                      onPressed: () => exportSiteExempleFile()
-                  )
-                ],
-              ),
               contentHorizontalPadding: 20,
               contentBorderWidth: 1,
             ),

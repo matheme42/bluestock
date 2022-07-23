@@ -66,6 +66,21 @@ class HelpFileFormat extends StatelessWidget {
     await Share.shareFiles([file.path], text: "Fichier d'exemple site.csv");
   }
 
+  Future<void> exportArticleExempleFile() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final path = directory.path;
+    final file = File('$path/article_exemple.csv');
+    if (await file.exists()) {
+      file.delete();
+    }
+    String line = "process,code produit,Dénomination commerciale,DCI,Dénomination interne,Famille,Sous-famille,Unité de comptage,Référence marque / laboratoire,Code Barre/Qrcode\n";
+    await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
+    line = "*,doit etre unique,*,*,*,*,*,*,*,*\n";
+    await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
+    await Share.shareFiles([file.path], text: "Fichier d'exemple site.csv");
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -94,21 +109,36 @@ class HelpFileFormat extends StatelessWidget {
             ),
             AccordionSection(
               isOpen: false,
-              leftIcon: const Icon(Icons.date_range, color: Colors.white),
-              headerBackgroundColor: Colors.blue,
               headerBackgroundColorOpened: Colors.deepPurple,
-              header:
-                  const Text('Date', style: TextStyle(color: Colors.white70)),
-              content: Text(
-                  '''Ce champs correspond a la date ou sera réalisé l'inventaire''',
-                  style: _contentStyle),
-              contentHorizontalPadding: 20,
-              contentBorderWidth: 1,
+              leftIcon:
+              const Icon(Icons.list_alt_outlined, color: Colors.white),
+              header: const Text('Process',
+                  style: TextStyle(color: Colors.white70)),
+              content: Column(
+                children: [
+                  Text(
+                      "Ce champs correspond a la liste des process disponible pour l'inventaire."
+                          " Si ce champs est vide cliquer sur 'ajouter une liste de process'.\n"
+                          "Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos process\n\n"
+                          "Retouver un fichier d'exemple ci-dessous\n",
+                      style: _contentStyle),
+                  MaterialButton(
+                    color: Colors.deepPurple,
+                    child: const Text(
+                      "process_exemple.csv",
+                      style: TextStyle(color: Colors.white70),
+                    ),
+                    onPressed: () {
+                      exportProcessExempleFile();
+                    },
+                  )
+                ],
+              ),
             ),
             AccordionSection(
               isOpen: false,
               leftIcon:
-                  const Icon(Icons.home_work_outlined, color: Colors.white),
+              const Icon(Icons.home_work_outlined, color: Colors.white),
               header: const Text(
                 'Site',
                 style: TextStyle(color: Colors.white70),
@@ -118,10 +148,10 @@ class HelpFileFormat extends StatelessWidget {
               content: Column(
                 children: [
                   Text(
-                      "Ce champs correspond a la liste des différents site détaillé par zone triée par site"
-                      " Si ce champs est vide cliquer sur 'ajouter une liste de site'.\n"
-                      "puis cliquer sur le fichier CSV séparateur ',' correspondant a la liste de vos zones\n\n"
-                      "Retouver un fichier d'exemple ci-dessous\n",
+                      "Ce champs correspond a la liste des différents lieux de stockage, triés par site"
+                          " Si ce champs est vide cliquer sur 'importer la liste des lieux'.\n"
+                          "Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos zones\n\n"
+                          "Retouver un fichier d'exemple ci-dessous\n",
                       style: _contentStyle),
                   MaterialButton(
                     color: Colors.deepPurple,
@@ -138,31 +168,42 @@ class HelpFileFormat extends StatelessWidget {
             ),
             AccordionSection(
               isOpen: false,
+              leftIcon: const Icon(Icons.date_range, color: Colors.white),
+              headerBackgroundColor: Colors.blue,
               headerBackgroundColorOpened: Colors.deepPurple,
-              leftIcon:
-                  const Icon(Icons.list_alt_outlined, color: Colors.white),
-              header: const Text('Process',
+              header:
+                  const Text('Date', style: TextStyle(color: Colors.white70)),
+              content: Text(
+                  '''Ce champs correspond a la date ou sera réalisé l'inventaire''',
+                  style: _contentStyle),
+              contentHorizontalPadding: 20,
+              contentBorderWidth: 1,
+            ),
+            AccordionSection(
+              isOpen: false,
+              leftIcon: const Icon(Icons.upload_file, color: Colors.white),
+              headerBackgroundColor: Colors.blue,
+              headerBackgroundColorOpened: Colors.deepPurple,
+              header: const Text('articles',
                   style: TextStyle(color: Colors.white70)),
               content: Column(
                 children: [
                   Text(
-                      "Ce champs correspond a la liste des process disponible pour l'inventaire."
-                      " Si ce champs est vide cliquer sur 'ajouter une liste de process'.\n"
-                      "puis cliquer sur le fichier CSV séparateur ',' correspondant a la liste de vos process\n\n"
-                      "Retouver un fichier d'exemple ci-dessous\n",
+                      "cliquer sur 'importer des articles'.\n"
+                          "Puis cliquer sur le fichier CSV séparateur ',' correspondant a la liste de vos articles\n\n"
+                          "Retouver un fichier d'exemple ci-dessous\n",
                       style: _contentStyle),
                   MaterialButton(
-                    color: Colors.deepPurple,
-                    child: const Text(
-                      "process_exemple.csv",
-                      style: TextStyle(color: Colors.white70),
-                    ),
-                    onPressed: () {
-                      exportProcessExempleFile();
-                    },
+                      color: Colors.deepPurple,
+                      child: const Text("article_exemple.csv", style: TextStyle(
+                          color: Colors.white70
+                      ),),
+                      onPressed: () => exportArticleExempleFile()
                   )
                 ],
               ),
+              contentHorizontalPadding: 20,
+              contentBorderWidth: 1,
             ),
           ]),
     );

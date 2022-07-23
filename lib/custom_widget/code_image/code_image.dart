@@ -11,7 +11,7 @@ class CodeImage extends StatelessWidget {
 
   Widget buildBarcode() {
     double height = 80;
-    if (type == 'BarcodeFormat.qrCode' || type == 'BarcodeFormat.aztec') {
+    if (type == 'BarcodeFormat.qrCode' || type == 'BarcodeFormat.aztec' || type == 'BarcodeFormat.dataMatrix') {
       height = 200;
     }
     Barcode bc = getBarcodeType(type);
@@ -32,9 +32,15 @@ class CodeImage extends StatelessWidget {
     map['BarcodeFormat.code39'] = Barcode.code39();
     map['BarcodeFormat.code93'] = Barcode.code93();
     map['BarcodeFormat.itf'] = Barcode.itf();
+    map['BarcodeFormat.ean8'] = Barcode.ean8();
     map['BarcodeFormat.ean13'] = Barcode.ean13();
+    map['BarcodeFormat.upcA'] = Barcode.upcA();
     map['BarcodeFormat.upcE'] = Barcode.upcE();
     map['BarcodeFormat.aztec'] = Barcode.aztec();
+    map['BarcodeFormat.isbn'] = Barcode.isbn();
+    map['BarcodeFormat.pdf417'] = Barcode.pdf417();
+    map['BarcodeFormat.codabar'] = Barcode.codabar();
+    map['BarcodeFormat.dataMatrix'] = Barcode.dataMatrix();
     map['BarcodeFormat.qrCode'] = Barcode.qrCode();
     return map[type] ?? Barcode.code128();
   }

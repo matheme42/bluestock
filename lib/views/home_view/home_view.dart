@@ -111,6 +111,17 @@ class Home extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
                               child: ListTile(
+                                onLongPress: () {
+                                  appContext.currentInventory.value!.done =
+                                      true;
+                                  InventoryController()
+                                      .update(
+                                          appContext.currentInventory.value!)
+                                      .then((_) {
+                                    appContext.currentInventory.value = null;
+                                    appContext.previousZone = null;
+                                  });
+                                },
                                 onTap: () {
                                   appContext.currentInventory.value!.done =
                                       true;

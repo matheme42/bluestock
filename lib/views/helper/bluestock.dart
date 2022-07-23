@@ -32,7 +32,7 @@ class HelpBluestock extends StatelessWidget {
               header: const Text('Cette page',
                   style: TextStyle(color: Colors.white70)),
               content: Text(
-                'Contient la liste de tous les inventaire réalisé\n'
+                'Contient la liste de tous les inventaires réalisés\n'
                 'Contient également les inventaires en cours de réalisation',
                 style: _contentStyle,
               ),

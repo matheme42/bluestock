@@ -1,3 +1,4 @@
+import 'package:bluestock/database/models/article.dart';
 import 'package:bluestock/database/models/inventory.dart';
 import 'package:bluestock/database/models/site.dart';
 import 'package:bluestock/database/models/zone.dart';
@@ -20,6 +21,8 @@ class BluestockContext with ChangeNotifier {
   List<String> siteNames = [];
   List<Site> sites = [];
   List<Inventory> inventories = [];
+  List<String> articleStrings = [];
+  DateTime? articleLoadedDate;
 
   ValueNotifier<Inventory?> currentInventory = ValueNotifier(null);
   ValueNotifier<Zone?> currentZone = ValueNotifier(null);

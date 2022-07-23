@@ -6,7 +6,6 @@ import 'package:bluestock/database/models/inventory.dart';
 import 'package:bluestock/database/models/site.dart';
 import 'package:bluestock/database/models/zone.dart';
 import 'package:bluestock/database/zone_controller.dart';
-import 'package:bluestock/views/inventory_view/import_articles.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -36,10 +35,6 @@ class InventoryMenu extends StatelessWidget {
                         valueListenable: appContext.currentInventory.value!
                             .articleLoaded,
                         builder: (context, articleLoaded, _) {
-                          if (articleLoaded == false &&
-                              articleCsvInLoading == false) {
-                            return const ImportArticle();
-                          }
                           return Skeleton(
                             isLoading: !articleLoaded,
                             shimmerGradient: const LinearGradient(colors: [
@@ -103,6 +98,15 @@ class InventoryMenu extends StatelessWidget {
                                                       site.zones[index];
                                                   appContext.scannerController.start();
                                                 },
+                                                onLongPress: () {
+                                                  if (lock) {
+                                                    return;
+                                                  }
+                                                  appContext.previousZone = null;
+                                                  appContext.currentZone.value =
+                                                  site.zones[index];
+                                                  appContext.scannerController.start();
+                                                },
                                                 visualDensity:
                                                     const VisualDensity(vertical: -3),
                                                 textColor: Colors.white,
@@ -143,37 +147,6 @@ class InventoryMenu extends StatelessWidget {
                   });
             },
           ),
-        ),
-        bottomNavigationBar: ValueListenableBuilder<bool>(
-          valueListenable: Import.articleCsvInLoading,
-          child: ListTile(
-            onTap: () {
-              Inventory inventory = appContext.currentInventory.value!;
-              InventoryController().destroy(inventory).then((_) {
-                appContext.inventories.remove(inventory);
-                appContext.previousZone = null;
-                appContext.currentInventory.value = null;
-              });
-            },
-            title: const Text(
-              'annuler',
-              style: TextStyle(
-                color: Colors.orange,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          builder: (context, value, child) {
-            if (BluestockContext.of(context)
-                    .currentInventory
-                    .value!
-                    .articleLoaded
-                    .value ==
-                true) {
-              return const SizedBox.shrink();
-            }
-            return value ? const SizedBox.shrink() : child!;
-          },
         ),
       ),
     );

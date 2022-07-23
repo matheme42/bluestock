@@ -7,6 +7,11 @@ class SharedPreferenceController {
 
   static const String _cguKeys = "cgu_keys";
 
+  static const String _articleKeys = "article_keys";
+
+  static const String _articleDateKeys = "article_date_keys";
+
+
   static Future<bool> getCgu() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     bool? validated = preferences.getBool(_cguKeys);
@@ -38,5 +43,28 @@ class SharedPreferenceController {
   static Future<void> setProcess(List<String> data) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setStringList(_processKeys, data);
+  }
+
+  static Future<List<String>> getArticles() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String>? articles = preferences.getStringList(_articleKeys);
+    return (articles ?? []);
+  }
+
+  static Future<void> setArticles(List<String> data) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setStringList(_articleKeys, data);
+  }
+
+  static Future<DateTime?> getArticlesDate() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? date = preferences.getString(_articleDateKeys);
+    if (date == null) return (null);
+    return (DateTime.parse(date));
+  }
+
+  static Future<void> setArticlesDate(DateTime date) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(_articleDateKeys, date.toIso8601String());
   }
 }

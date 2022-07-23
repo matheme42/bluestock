@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_simple_calculator/flutter_simple_calculator.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class ArticleNumberPicker extends StatelessWidget {
@@ -13,21 +14,38 @@ class ArticleNumberPicker extends StatelessWidget {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return TextField(
-          autofocus: true,
-          showCursor: false,
-          decoration: const InputDecoration(
-            fillColor: Colors.white,
-            filled: true,
-            border: InputBorder.none,
-          ),
-          keyboardType: TextInputType.number,
-          onSubmitted: (String value) {
-            if (value.isNotEmpty) {
-              currentValue.value = int.parse(value);
-            }
-            Navigator.pop(context);
-          },
+        return Column(
+          children: [
+            const Spacer(
+              flex: 10,
+            ),
+            Flexible(
+              flex: 30,
+              child: SimpleCalculator(
+                onChanged: (String? a, double? b, String? c) {
+                  if (a == '='){
+                    currentValue.value = b?.ceil() ?? 0;
+                    Navigator.of(context).pop();
+                  }
+                },
+                theme: CalculatorThemeData(
+                  displayColor: Colors.black,
+                  commandColor: Colors.deepPurple,
+                  expressionColor: Colors.blueAccent,
+                  expressionStyle: TextStyle(color: Colors.white),
+                  commandStyle: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
+                  numColor: Colors.white.withAlpha(200),
+                  operatorColor: Color(0xFF112473),
+                  operatorStyle: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
+                  numStyle: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
+                  displayStyle: TextStyle(fontSize: 80, color: Colors.yellow),
+                ),
+              ),
+            ),
+          ],
         );
       },
       animationType: DialogTransitionType.size,

@@ -52,17 +52,34 @@ class Article extends Model {
 
   void fromList(List<dynamic> data) {
     if (data.length < 11) return;
-    process = data[0]?.toString().toLowerCase() ?? '';
-    codeProduct = data[1]?.toString().toLowerCase() ?? '';
-    commercialDenomination = data[2]?.toString().toLowerCase() ?? '';
-    dci = data[3]?.toString().toLowerCase() ?? '';
-    internalDenomination = data[4]?.toString().toLowerCase() ?? '';
-    family = data[5]?.toString().toLowerCase() ?? '';
-    underFamily = data[6]?.toString().toLowerCase() ?? '';
-    countingUnit = data[7]?.toString().toLowerCase() ?? '';
-    referenceUnit = data[8]?.toString().toLowerCase() ?? '';
-    brandLaboratoryReference = data[9]?.toString().toLowerCase() ?? '';
-    code = data[10]?.toString().toLowerCase() ?? '';
+    process = data[0]?.toString().trim().toLowerCase() ?? '';
+    codeProduct = data[1]?.toString().trim().toLowerCase() ?? '';
+    commercialDenomination = data[2]?.toString().trim().toLowerCase() ?? '';
+    dci = data[3]?.toString().trim().toLowerCase() ?? '';
+    internalDenomination = data[4]?.toString().trim().toLowerCase() ?? '';
+    family = data[5]?.toString().trim().toLowerCase() ?? '';
+    underFamily = data[6]?.toString().trim().toLowerCase() ?? '';
+    countingUnit = data[7]?.toString().trim().toLowerCase() ?? '';
+    referenceUnit = data[8]?.toString().trim().toLowerCase() ?? '';
+    brandLaboratoryReference = data[9]?.toString().trim().toLowerCase() ?? '';
+    code = data[10]?.toString().trim().toLowerCase() ?? '';
+  }
+
+  Article copy() => Article()..fromMap(asMap());
+
+  @override
+  void fromMap(Map<String, dynamic> data) {
+    data.containsKey('process') ? process = data['process'] : 0;
+    data.containsKey('codeProduct') ? codeProduct = data['codeProduct'] : 0;
+    data.containsKey('commercialDenomination') ? commercialDenomination = data['commercialDenomination'] : 0;
+    data.containsKey('dci') ? dci = data['dci'] : 0;
+    data.containsKey('internalDenomination') ? internalDenomination = data['internalDenomination'] : 0;
+    data.containsKey('family') ? family = data['family'] : 0;
+    data.containsKey('underFamily') ? underFamily = data['underFamily'] : 0;
+    data.containsKey('countingUnit') ? countingUnit = data['countingUnit'] : 0;
+    data.containsKey('referenceUnit') ? referenceUnit = data['referenceUnit'] : 0;
+    data.containsKey('brandLaboratoryReference') ? brandLaboratoryReference = data['brandLaboratoryReference'] : 0;
+    data.containsKey('code') ? family = data['code'] : 0;
   }
 
   @override

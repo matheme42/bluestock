@@ -38,8 +38,14 @@ class HomePage extends StatelessWidget {
                           inventoryResumePopup(context, inventory);
                           return;
                         }
-                        BluestockContext.of(context).currentInventory.value =
-                            inventory;
+                        BluestockContext.of(context).currentInventory.value = inventory;
+                      },
+                      onLongPress: () {
+                        if (inventory.done == true) {
+                          inventoryResumePopup(context, inventory);
+                          return;
+                        }
+                        BluestockContext.of(context).currentInventory.value = inventory;
                       },
                       title: AutoSizeText(
                         inventory.site.name,

@@ -16,17 +16,17 @@ class Zone extends Model {
 
   void fromList(List<dynamic> data) {
     if (data.length < 2) return;
-    name = data[0]?.toString() ?? '';
-    num = data[1]?.toString() ?? '';
+    name = data[0]?.toString().trim() ?? '';
+    num = data[1]?.toString().trim() ?? '';
   }
 
   @override
   void fromMap(Map<String, dynamic> data) {
-    data.containsKey("name") ? name = data["name"].toString() : 0;
+    data.containsKey("name") ? name = data["name"].toString().trim() : 0;
     data.containsKey("lock")
         ? lock.value = data["lock"] == 0 ? false : true
         : 0;
-    data.containsKey("numero") ? num = data["numero"].toString() : 0;
+    data.containsKey("numero") ? num = data["numero"].toString().trim() : 0;
     super.fromMap(data);
   }
 

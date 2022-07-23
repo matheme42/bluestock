@@ -51,7 +51,10 @@ class Loading {
     BluestockContext appContext = BluestockContext.of(context);
     appContext.process.addAll(await SharedPreferenceController.getProcess());
     appContext.cguAccepted.value = await SharedPreferenceController.getCgu();
+    appContext.articleStrings = await SharedPreferenceController.getArticles();
+    appContext.articleLoadedDate = await SharedPreferenceController.getArticlesDate();
   }
+
 
   /// Permet de charger les configuration de base de l'application
   /// SharedPreference & Sqlite

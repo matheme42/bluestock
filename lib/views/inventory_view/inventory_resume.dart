@@ -65,7 +65,7 @@ class InventoryResumeState extends State<InventoryResume> {
                             child: delete.value == false
                                 ? IconButton(
                                     icon: const Icon(
-                                      Icons.delete_outline_rounded,
+                                      Icons.more_horiz,
                                       color: Colors.white70,
                                     ),
                                     onPressed: () {
@@ -94,6 +94,11 @@ class InventoryResumeState extends State<InventoryResume> {
                                 Navigator.pop(context);
                               });
                             },
+                            onLongPress: () {
+                              export().then((value) {
+                                Navigator.pop(context);
+                              });
+                            },
                             title: const Icon(
                               Icons.upload,
                               color: Colors.white,
@@ -106,28 +111,71 @@ class InventoryResumeState extends State<InventoryResume> {
                             visualDensity: const VisualDensity(vertical: -4),
                           ),
                         )
-                      : Card(
-                          color: Colors.red,
-                          child: ListTile(
-                            onTap: () {
-                              InventoryController()
-                                  .destroy(inventory)
-                                  .then((_) {
-                                var appContext = BluestockContext.of(context);
-                                appContext.inventories.remove(inventory);
-                                appContext.updater.value =
-                                    !appContext.updater.value;
-                                Navigator.pop(context);
-                              });
-                            },
-                            title: const Text(
-                              'Supprimer',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            visualDensity: const VisualDensity(vertical: 0),
+                      : Row(
+                        children: [
+                          Flexible(
+                            flex: 2,
+                            child: Card(
+                                color: Colors.deepPurple,
+                                child: ListTile(
+                                  onLongPress: () {
+                                    var appContext = BluestockContext.of(context);
+                                    inventory.done = false;
+                                    InventoryController().update(inventory).then((_) {
+                                      appContext.currentInventory.value = inventory;
+                                      Navigator.pop(context);
+                                    });
+                                  },
+                                  onTap: () {
+                                    var appContext = BluestockContext.of(context);
+                                    inventory.done = false;
+                                    InventoryController().update(inventory).then((_) {
+                                      appContext.currentInventory.value = inventory;
+                                      Navigator.pop(context);
+                                    });
+                                  },
+                                  title: const AutoSizeText(
+                                    'Rectifier',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(color: Colors.white),
+                                    maxLines: 1,
+                                  ),
+                                  visualDensity: const VisualDensity(vertical: 0),
+                                ),
+                              ),
                           ),
-                        )
+                          Flexible(
+                            child: Card(
+                              color: Colors.red,
+                              child: ListTile(
+                                onLongPress: () {
+                                  InventoryController().destroy(inventory).then((_) {
+                                    var appContext = BluestockContext.of(context);
+                                    appContext.inventories.remove(inventory);
+                                    appContext.updater.value = !appContext.updater.value;
+                                    Navigator.pop(context);
+                                  });
+                                },
+                                onTap: () {
+                                  InventoryController().destroy(inventory).then((_) {
+                                    var appContext = BluestockContext.of(context);
+                                    appContext.inventories.remove(inventory);
+                                    appContext.updater.value = !appContext.updater.value;
+                                    Navigator.pop(context);
+                                  });
+                                },
+                                title: const AutoSizeText(
+                                  'Supprimer',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.white),
+                                  maxLines: 1,
+                                ),
+                                visualDensity: const VisualDensity(vertical: 0),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                   : null);
         });
   }

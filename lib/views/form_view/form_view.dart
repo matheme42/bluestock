@@ -56,6 +56,8 @@ class NewInventoryForm extends StatelessWidget {
     }
     inventory.site = newSite;
     // ignore: use_build_context_synchronously
+    inventory.importArticle(BluestockContext.of(context).articleStrings);
+    // ignore: use_build_context_synchronously
     BluestockContext.of(context).inventories.add(inventory);
     // ignore: use_build_context_synchronously
     BluestockContext.of(context).currentInventory.value = inventory;

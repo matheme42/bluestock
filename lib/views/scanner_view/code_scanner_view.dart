@@ -16,13 +16,15 @@ class BarcodeScannerState extends State<BarcodeScanner> {
     List<Article> articles = appContext.currentInventory.value!.articles;
 
     String articleTitle = 'non définie';
+    Article? a;
     try {
-      articleFound.value = articles.firstWhere((elm) => elm.code == code);
-      articleFound.value!.commercialDenomination.toString();
+      a = articles.firstWhere((elm) => elm.code == code);
+      articleTitle = a.commercialDenomination;
     } catch (_) {}
     CodeScannerAppBar.open(articleTitle);
     appContext.scannerController.stop();
     widgetCode.value = CodeImage(code: code ?? '', type: type);
+    articleFound.value = a;
     scannerBottomBarKey.currentState?.open();
   }
 

@@ -16,9 +16,12 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
+const csvDelimitor = ',';
+
 class Import {
   static void sitesCsv(BuildContext context) async {
     BluestockContext appContext = BluestockContext.of(context);
+    FilePicker.platform.clearTemporaryFiles();
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['csv'],
@@ -28,7 +31,7 @@ class Import {
       final fields = await input
           .transform(latin1.decoder)
           .transform(const CsvToListConverter(
-              fieldDelimiter: ';', shouldParseNumbers: false))
+              fieldDelimiter: csvDelimitor, shouldParseNumbers: false))
           .toList();
       fields.removeAt(0);
       var error = Checker.checkSites(fields);
@@ -78,6 +81,7 @@ class Import {
 
   static void articlesCsv(BuildContext context, Inventory? inventory) async {
     if (inventory == null) return;
+    FilePicker.platform.clearTemporaryFiles();
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['csv'],
@@ -85,7 +89,7 @@ class Import {
     if (result == null) return;
     articleCsvInLoading.value = true;
     final input = File(result.files.first.path!).openRead();
-    CsvToListConverter c = const CsvToListConverter(fieldDelimiter: ';', shouldParseNumbers: false);
+    CsvToListConverter c = const CsvToListConverter(fieldDelimiter: csvDelimitor, shouldParseNumbers: false);
     final fields = await input
         .transform(latin1.decoder)
         .transform(c)
@@ -104,25 +108,20 @@ class Import {
       articleCsvInLoading.value = false;
       return;
     }
-    inventory.articles.clear();
+    // ignore: use_build_context_synchronously
+    BluestockContext appContext = BluestockContext.of(context);
+    appContext.articleStrings.clear();
     for (var elm in fields) {
-      if (elm[0].toString().toLowerCase() == inventory.process) {
-        var ars = ArticleStrings();
-        ars.string = elm.toString();
-        ars = await ArticleController().insert(ars, inventory.site);
-        var ar = Article();
-        ar.fromList(elm);
-        ar.id = ars.id;
-        inventory.articles.add(ar);
-      }
+      appContext.articleStrings.add(elm.toString().toLowerCase());
     }
-    inventory.articleLoaded.value = true;
-    await InventoryController().update(inventory);
-
+    appContext.articleLoadedDate = DateTime.now();
+    await SharedPreferenceController.setArticlesDate(appContext.articleLoadedDate!);
+    await SharedPreferenceController.setArticles(appContext.articleStrings);
     articleCsvInLoading.value = false;
   }
 
   static void processCsv(BuildContext context) async {
+    FilePicker.platform.clearTemporaryFiles();
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['csv'],
@@ -132,7 +131,7 @@ class Import {
       final fields1 = input.transform(latin1.decoder);
       final fields = await fields1
           .transform(const CsvToListConverter(
-              fieldDelimiter: ';', shouldParseNumbers: false))
+              fieldDelimiter: csvDelimitor, shouldParseNumbers: false))
           .toList();
       fields.removeAt(0);
 
@@ -153,7 +152,7 @@ class Import {
 
       appContext.process.clear();
       for (var elm in fields) {
-        appContext.process.add(elm[0].toString().toLowerCase());
+        appContext.process.add(elm[0].toString().trim().toLowerCase());
       }
 
 // ignore: use_build_context_synchronously

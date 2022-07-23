@@ -1,8 +1,8 @@
 import 'package:bluestock/database/models/inventory.dart';
-import 'package:bluestock/views/form_view/form_view.dart';
+import 'package:bluestock/views/form_view/articles_field.dart';
+import 'package:bluestock/views/form_view/date_field.dart';
 import 'package:bluestock/views/form_view/process_field.dart';
 import 'package:bluestock/views/form_view/storage_zone_field.dart';
-import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 
 class FormBody extends StatelessWidget {
@@ -18,29 +18,10 @@ class FormBody extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              DateTimeFormField(
-                onDateSelected: (date) => inventory.date = date,
-                  dateTextStyle: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelStyle: const TextStyle(color: Colors.white),
-                    counterStyle: const TextStyle(color: Colors.white),
-                    hintStyle: const TextStyle(color: Colors.white),
-                    helperStyle: const TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    labelText: 'Date',
-                    prefixIcon: const Icon(
-                      Icons.date_range,
-                      color: Colors.white,
-                    ),
-                  ),
-                  mode: DateTimeFieldPickerMode.date,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: CustomValidator.required),
+              ProcessField(inventory: inventory),
               StorageZoneField(inventory: inventory),
-              ProcessField(inventory: inventory)
+              DateField(inventory: inventory),
+              ArticlesField(inventory: inventory),
             ],
           ),
         ),

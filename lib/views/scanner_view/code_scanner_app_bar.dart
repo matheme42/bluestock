@@ -16,19 +16,25 @@ class CodeScannerAppBar {
     List<String> suggestions = [];
     for (var elm in articles) {
       bool add = false;
-      if (elm.codeProduct.toString().startsWith(search)) {
+      if (elm.codeProduct.toString().contains(search)) {
         add = true;
       }
-      if (elm.commercialDenomination.toString().startsWith(search)) {
+      if (elm.code.toString().contains(search)) {
         add = true;
       }
-      if (elm.internalDenomination.toString().startsWith(search)) {
+      if (elm.commercialDenomination.toString().contains(search)) {
+        add = true;
+      }
+      if (elm.internalDenomination.toString().contains(search)) {
         add = true;
       }
       if (elm.referenceUnit.toString().contains(search)) {
         add = true;
       }
-      if (elm.code.startsWith(search)) {
+      if (elm.family.toString().contains(search)) {
+        add = true;
+      }
+      if (elm.underFamily.toString().contains(search)) {
         add = true;
       }
       if (add == true) {

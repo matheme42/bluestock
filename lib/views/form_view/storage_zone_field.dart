@@ -61,7 +61,7 @@ class StorageZoneField extends StatelessWidget {
               counter: MaterialButton(
                 onPressed: () => Import.sitesCsv(context),
                 child: Text(
-                  s.length == 1 ? 'importer une liste de zones' : 'metre a jour',
+                  s.length == 1 ? 'importer la liste des lieux' : 'metre a jour',
                   style: const TextStyle(color: Colors.white38),
                 ),
               ),
