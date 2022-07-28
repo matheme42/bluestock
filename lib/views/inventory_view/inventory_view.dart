@@ -2,10 +2,10 @@ import 'package:bluestock/context/context.dart';
 import 'package:bluestock/custom_widget/shrink_side_menu/shrink_sidemenu.dart';
 import 'package:bluestock/database/inventory_controller.dart';
 import 'package:bluestock/database/models/inventory.dart';
-import 'package:bluestock/views/home_view/home_app_bar.dart';
-import 'package:bluestock/views/home_view/welcome_view.dart';
+import 'package:bluestock/views/inventory_view/app_bar.dart';
 import 'package:bluestock/views/inventory_view/inventory_menu.dart';
 import 'package:bluestock/views/scanner_view/code_scanner_view.dart';
+import 'package:bluestock/views/welcome_view/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeletons/skeletons.dart';
@@ -88,83 +88,89 @@ class Home extends StatelessWidget {
               return ValueListenableBuilder<Inventory?>(
                   valueListenable: appContext.currentInventory,
                   builder: (context, inventory, _) {
-
                     return AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
                         transitionBuilder: (child, anm) {
                           return FadeTransition(opacity: anm, child: child);
                         },
-                        child: inventory == null ? const WelcomePage() : Stack(
-                          children: [
-                            SideMenu(
-                                closeIcon: null,
-                                menu: const InventoryMenu(),
-                                extra: Scaffold(
-                                  backgroundColor: const Color(0xFF112473),
-                                  appBar: CustomAppBar.inventory(context, inventory),
-                                ),
-                                opened: sideMenuOpened,
-                                child: scanner),
-                            ValueListenableBuilder(
-                              valueListenable: inventory.zoneLockChange,
-                              child: Align(
-                                alignment: const Alignment(0, 1),
-                                child: Card(
-                                  color: Colors.deepPurple,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  child: ListTile(
-                                    onLongPress: () {
-                                      appContext.currentInventory.value!.done =
-                                      true;
-                                      InventoryController()
-                                          .update(
-                                          appContext.currentInventory.value!)
-                                          .then((_) {
-                                        appContext.currentInventory.value = null;
-                                        appContext.previousZone = null;
-                                      });
-                                    },
-                                    onTap: () {
-                                      appContext.currentInventory.value!.done =
-                                      true;
-                                      InventoryController()
-                                          .update(
-                                          appContext.currentInventory.value!)
-                                          .then((_) {
-                                        appContext.currentInventory.value = null;
-                                        appContext.previousZone = null;
-                                      });
-                                    },
-                                    title: const Icon(
-                                      Icons.done_outline,
-                                      color: Colors.white,
+                        child: inventory == null
+                            ? const WelcomePage()
+                            : Stack(
+                                children: [
+                                  SideMenu(
+                                      closeIcon: null,
+                                      menu: const InventoryMenu(),
+                                      extra: Scaffold(
+                                        backgroundColor:
+                                            const Color(0xFF112473),
+                                        appBar: CustomAppBar.inventory(
+                                            context, inventory),
+                                      ),
+                                      opened: sideMenuOpened,
+                                      child: scanner),
+                                  ValueListenableBuilder(
+                                    valueListenable: inventory.zoneLockChange,
+                                    child: Align(
+                                      alignment: const Alignment(0, 1),
+                                      child: Card(
+                                        color: Colors.deepPurple,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 10),
+                                        child: ListTile(
+                                          onLongPress: () {
+                                            appContext.currentInventory.value!
+                                                .done = true;
+                                            InventoryController()
+                                                .update(appContext
+                                                    .currentInventory.value!)
+                                                .then((_) {
+                                              appContext.currentInventory
+                                                  .value = null;
+                                              appContext.previousZone = null;
+                                            });
+                                          },
+                                          onTap: () {
+                                            appContext.currentInventory.value!
+                                                .done = true;
+                                            InventoryController()
+                                                .update(appContext
+                                                    .currentInventory.value!)
+                                                .then((_) {
+                                              appContext.currentInventory
+                                                  .value = null;
+                                              appContext.previousZone = null;
+                                            });
+                                          },
+                                          title: const Icon(
+                                            Icons.done_outline,
+                                            color: Colors.white,
+                                          ),
+                                          subtitle: Text(
+                                            'finish'.tr,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
+                                          visualDensity:
+                                              const VisualDensity(vertical: -4),
+                                        ),
+                                      ),
                                     ),
-                                    subtitle: Text(
-                                      'finish'.tr,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(color: Colors.white),
-                                    ),
-                                    visualDensity:
-                                    const VisualDensity(vertical: -4),
-                                  ),
-                                ),
-                              ),
-                              builder: (context, _, child) {
-                                for (var a in inventory.site.zones) {
-                                  if (a.lock.value == false) {
-                                    child = Container();
-                                    break;
-                                  }
-                                }
-                                return AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 500),
-                                    child: child!);
-                              },
-                            )
-                          ],
-                        )
-                    );
+                                    builder: (context, _, child) {
+                                      for (var a in inventory.site.zones) {
+                                        if (a.lock.value == false) {
+                                          child = Container();
+                                          break;
+                                        }
+                                      }
+                                      return AnimatedSwitcher(
+                                          duration:
+                                              const Duration(milliseconds: 500),
+                                          child: child!);
+                                    },
+                                  )
+                                ],
+                              ));
                   });
             }),
       ),

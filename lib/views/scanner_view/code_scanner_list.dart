@@ -27,8 +27,9 @@ class ArticleCountListState extends State<ArticleCountList> {
 
   void loadMore() {
     BluestockContext appContext = BluestockContext.of(context);
-    if (appContext.currentZone.value == null) return ;
-    List<ArticleCount> all = appContext.currentZone.value!.articlesCount.reversed.toList();
+    if (appContext.currentZone.value == null) return;
+    List<ArticleCount> all =
+        appContext.currentZone.value!.articlesCount.reversed.toList();
     int padding = articleCount.length + step;
     if (padding > all.length) {
       padding = all.length;

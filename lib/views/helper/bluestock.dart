@@ -1,7 +1,8 @@
-import 'package:accordion/accordion.dart';
-import 'package:accordion/controllers.dart';
+import 'package:bluestock/custom_widget/accordeon/accordion.dart';
+import 'package:bluestock/custom_widget/accordeon/controllers.dart';
 import 'package:bluestock/custom_widget/code_image/code_bar_demonstator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HelpBluestock extends StatelessWidget {
   final _contentStyle = const TextStyle(
@@ -16,21 +17,19 @@ class HelpBluestock extends StatelessWidget {
       child: Accordion(
           maxOpenSections: 1,
           headerBackgroundColorOpened: Colors.black54,
-          scaleWhenAnimating: true,
+          scaleWhenAnimating: false,
           openAndCloseAnimation: true,
-          headerPadding:
-              const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+          headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
           sectionClosingHapticFeedback: SectionHapticFeedback.light,
           children: [
             AccordionSection(
               isOpen: false,
-              leftIcon:
-                  const Icon(Icons.import_contacts, color: Colors.white),
+              leftIcon: const Icon(Icons.import_contacts, color: Colors.white),
               headerBackgroundColor: Colors.blue,
               headerBackgroundColorOpened: Colors.deepPurple,
-              header: const Text('Cette page',
-                  style: TextStyle(color: Colors.white70)),
+              header: Text('this_page'.tr,
+                  style: const TextStyle(color: Colors.white70)),
               content: Text(
                 'Contient la liste de tous les inventaires réalisés\n'
                 'Contient également les inventaires en cours de réalisation',
@@ -44,8 +43,8 @@ class HelpBluestock extends StatelessWidget {
               leftIcon: const Icon(Icons.date_range, color: Colors.white),
               headerBackgroundColor: Colors.blue,
               headerBackgroundColorOpened: Colors.deepPurple,
-              header: const Text('Code-barres supportés',
-                  style: TextStyle(color: Colors.white70)),
+              header: Text('supported_barcode'.tr,
+                  style: const TextStyle(color: Colors.white70)),
               content: const CodeBarDemonstrator(),
               contentHorizontalPadding: 20,
               contentBorderWidth: 1,

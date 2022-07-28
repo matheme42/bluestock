@@ -121,20 +121,20 @@ class CodeScannerAppBar {
         ),
       ],
       leading: ValueListenableBuilder<Zone?>(
-        valueListenable: appContext.currentZone,
+          valueListenable: appContext.currentZone,
           child: IconButton(
               onPressed: onLeadingTap,
               icon: const Icon(Icons.menu, color: Colors.white)),
           builder: (context, zone, child) {
-        if (appContext.previousZone != null) {
-          return ValueListenableBuilder<bool>(
-              valueListenable: appContext.previousZone!.lock,
-              builder: (context, lock, _) {
-                  return lock ? const SizedBox.shrink() : child!;
-              });
-        }
-        return zone != null ? child! : const SizedBox.shrink();
-      }),
+            if (appContext.previousZone != null) {
+              return ValueListenableBuilder<bool>(
+                  valueListenable: appContext.previousZone!.lock,
+                  builder: (context, lock, _) {
+                    return lock ? const SizedBox.shrink() : child!;
+                  });
+            }
+            return zone != null ? child! : const SizedBox.shrink();
+          }),
       suggestionsElevation: 5,
       onSuggestionTap: (string) => onSuggestionTap!(string.split(';').first),
       title: const Text(''),

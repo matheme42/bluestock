@@ -1,6 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceController {
+
+  static const String _languageKeys = "language_keys";
+
   static const String _sitesKeys = "site_keys";
 
   static const String _processKeys = "process_keys";
@@ -11,6 +15,20 @@ class SharedPreferenceController {
 
   static const String _articleDateKeys = "article_date_keys";
 
+  static Future<Locale> getLanguage() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? languageString = preferences.getString(_languageKeys);
+    Locale? language;
+    if (languageString != null) {
+      language= Locale(languageString.substring(0, 2), languageString.substring(3, 5));
+    }
+    return (language ?? const Locale('fr', 'FR'));
+  }
+
+  static Future<void> setLanguage(Locale locale) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(_languageKeys, locale.toString());
+  }
 
   static Future<bool> getCgu() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

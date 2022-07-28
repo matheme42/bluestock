@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:accordion/accordion.dart';
-import 'package:accordion/controllers.dart';
+import 'package:bluestock/custom_widget/accordeon/accordion.dart';
+import 'package:bluestock/custom_widget/accordeon/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -73,13 +74,13 @@ class HelpFileFormat extends StatelessWidget {
     if (await file.exists()) {
       file.delete();
     }
-    String line = "process,code produit,Dénomination commerciale,DCI,Dénomination interne,Famille,Sous-famille,Unité de comptage,Référence marque / laboratoire,Code Barre/Qrcode\n";
+    String line =
+        "process,code produit,Dénomination commerciale,DCI,Dénomination interne,Famille,Sous-famille,Unité de comptage,Référence marque / laboratoire,Code Barre/Qrcode\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
     line = "*,doit etre unique,*,*,*,*,*,*,*,*\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
     await Share.shareFiles([file.path], text: "Fichier d'exemple site.csv");
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +89,7 @@ class HelpFileFormat extends StatelessWidget {
       child: Accordion(
           maxOpenSections: 1,
           headerBackgroundColorOpened: Colors.black54,
-          scaleWhenAnimating: true,
+          scaleWhenAnimating: false,
           openAndCloseAnimation: true,
           headerPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
@@ -100,8 +101,8 @@ class HelpFileFormat extends StatelessWidget {
               leftIcon: const Icon(Icons.import_contacts, color: Colors.white),
               headerBackgroundColor: Colors.blue,
               headerBackgroundColorOpened: Colors.deepPurple,
-              header: const Text('Cette page',
-                  style: TextStyle(color: Colors.white70)),
+              header: Text('this_page'.tr,
+                  style: const TextStyle(color: Colors.white70)),
               content: Text('Permet de démarrer un nouvel inventaire',
                   style: _contentStyle),
               contentHorizontalPadding: 20,
@@ -111,16 +112,16 @@ class HelpFileFormat extends StatelessWidget {
               isOpen: false,
               headerBackgroundColorOpened: Colors.deepPurple,
               leftIcon:
-              const Icon(Icons.list_alt_outlined, color: Colors.white),
+                  const Icon(Icons.list_alt_outlined, color: Colors.white),
               header: const Text('Process',
                   style: TextStyle(color: Colors.white70)),
               content: Column(
                 children: [
                   Text(
                       "Ce champs correspond a la liste des process disponible pour l'inventaire."
-                          " Si ce champs est vide cliquer sur 'ajouter une liste de process'.\n"
-                          "Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos process\n\n"
-                          "Retouver un fichier d'exemple ci-dessous\n",
+                      " Si ce champs est vide cliquer sur 'ajouter une liste de process'.\n"
+                      "Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos process\n\n"
+                      "Retouver un fichier d'exemple ci-dessous\n",
                       style: _contentStyle),
                   MaterialButton(
                     color: Colors.deepPurple,
@@ -138,7 +139,7 @@ class HelpFileFormat extends StatelessWidget {
             AccordionSection(
               isOpen: false,
               leftIcon:
-              const Icon(Icons.home_work_outlined, color: Colors.white),
+                  const Icon(Icons.home_work_outlined, color: Colors.white),
               header: const Text(
                 'Site',
                 style: TextStyle(color: Colors.white70),
@@ -149,9 +150,9 @@ class HelpFileFormat extends StatelessWidget {
                 children: [
                   Text(
                       "Ce champs correspond a la liste des différents lieux de stockage, triés par site"
-                          " Si ce champs est vide cliquer sur 'importer la liste des lieux'.\n"
-                          "Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos zones\n\n"
-                          "Retouver un fichier d'exemple ci-dessous\n",
+                      " Si ce champs est vide cliquer sur 'importer la liste des lieux'.\n"
+                      "Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos zones\n\n"
+                      "Retouver un fichier d'exemple ci-dessous\n",
                       style: _contentStyle),
                   MaterialButton(
                     color: Colors.deepPurple,
@@ -190,16 +191,16 @@ class HelpFileFormat extends StatelessWidget {
                 children: [
                   Text(
                       "cliquer sur 'importer des articles'.\n"
-                          "Puis cliquer sur le fichier CSV séparateur ',' correspondant a la liste de vos articles\n\n"
-                          "Retouver un fichier d'exemple ci-dessous\n",
+                      "Puis cliquer sur le fichier CSV séparateur ',' correspondant a la liste de vos articles\n\n"
+                      "Retouver un fichier d'exemple ci-dessous\n",
                       style: _contentStyle),
                   MaterialButton(
                       color: Colors.deepPurple,
-                      child: const Text("article_exemple.csv", style: TextStyle(
-                          color: Colors.white70
-                      ),),
-                      onPressed: () => exportArticleExempleFile()
-                  )
+                      child: const Text(
+                        "article_exemple.csv",
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                      onPressed: () => exportArticleExempleFile())
                 ],
               ),
               contentHorizontalPadding: 20,

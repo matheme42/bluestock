@@ -10,11 +10,11 @@ class BluestockContext with ChangeNotifier {
 
   ValueNotifier<bool> appLoaded = ValueNotifier(false);
   ValueNotifier<bool> cguAccepted = ValueNotifier(false);
+  bool cguAlreadyAccepted = false;
   ValueNotifier<int> siteLoaded = ValueNotifier(0);
   ValueNotifier<int> processLoaded = ValueNotifier(0);
 
-  var scannerController = MobileScannerController(torchEnabled: false);
-
+  Locale language = const Locale('FR', 'fr');
 
   List<String> process = [];
   List<String> siteNames = [];
@@ -23,6 +23,7 @@ class BluestockContext with ChangeNotifier {
   List<String> articleStrings = [];
   DateTime? articleLoadedDate;
 
+  var scannerController = MobileScannerController(torchEnabled: false);
   ValueNotifier<Inventory?> currentInventory = ValueNotifier(null);
   ValueNotifier<Zone?> currentZone = ValueNotifier(null);
   Zone? previousZone;

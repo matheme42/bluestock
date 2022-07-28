@@ -23,7 +23,7 @@ class ArticleNumberPicker extends StatelessWidget {
               flex: 30,
               child: SimpleCalculator(
                 onChanged: (String? a, double? b, String? c) {
-                  if (a == '='){
+                  if (a == '=') {
                     currentValue.value = b?.ceil() ?? 0;
                     Navigator.of(context).pop();
                   }
@@ -32,16 +32,23 @@ class ArticleNumberPicker extends StatelessWidget {
                   displayColor: Colors.black,
                   commandColor: Colors.deepPurple,
                   expressionColor: Colors.blueAccent,
-                  expressionStyle: TextStyle(color: Colors.white),
-                  commandStyle: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
+                  expressionStyle: const TextStyle(color: Colors.white),
+                  commandStyle: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30),
                   numColor: Colors.white.withAlpha(200),
-                  operatorColor: Color(0xFF112473),
-                  operatorStyle: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
-                  numStyle: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
-                  displayStyle: TextStyle(fontSize: 80, color: Colors.yellow),
+                  operatorColor: const Color(0xFF112473),
+                  operatorStyle: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30),
+                  numStyle: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30),
+                  displayStyle:
+                      const TextStyle(fontSize: 80, color: Colors.yellow),
                 ),
               ),
             ),

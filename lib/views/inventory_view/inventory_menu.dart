@@ -31,8 +31,8 @@ class InventoryMenu extends StatelessWidget {
                   valueListenable: Import.articleCsvInLoading,
                   builder: (context, articleCsvInLoading, _) {
                     return ValueListenableBuilder<bool>(
-                        valueListenable: appContext.currentInventory.value!
-                            .articleLoaded,
+                        valueListenable:
+                            appContext.currentInventory.value!.articleLoaded,
                         builder: (context, articleLoaded, _) {
                           return Skeleton(
                             isLoading: !articleLoaded,
@@ -41,21 +41,21 @@ class InventoryMenu extends StatelessWidget {
                               Colors.white10,
                               Color(0xFF112473),
                             ]),
-                            skeleton:
-                                ListView.builder(
-                                  itemCount: appContext.currentInventory.value!.site.zones.length,
-                                    itemBuilder: (context, index) {
-                              return SkeletonListTile(
-                                titleStyle: const SkeletonLineStyle(
-                                  height: 30
-                                ),
-                                hasLeading: false,
-                              );
-                            }),
+                            skeleton: ListView.builder(
+                                itemCount: appContext
+                                    .currentInventory.value!.site.zones.length,
+                                itemBuilder: (context, index) {
+                                  return SkeletonListTile(
+                                    titleStyle:
+                                        const SkeletonLineStyle(height: 30),
+                                    hasLeading: false,
+                                  );
+                                }),
                             child: ValueListenableBuilder(
                                 valueListenable: appContext.currentZone,
                                 builder: (context, data, _) {
-                                  Zone? zone = (data as Zone?) ?? appContext.previousZone;
+                                  Zone? zone = (data as Zone?) ??
+                                      appContext.previousZone;
                                   return ListView.builder(
                                     itemCount: site.zones.length,
                                     itemBuilder: (context, index) {
@@ -66,8 +66,14 @@ class InventoryMenu extends StatelessWidget {
                                             margin: const EdgeInsets.only(
                                                 bottom: 10),
                                             child: ListTile(
-                                                contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                                                selected: site.zones[index].name == zone?.name ? true : false,
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                selected:
+                                                    site.zones[index].name ==
+                                                            zone?.name
+                                                        ? true
+                                                        : false,
                                                 iconColor: Colors.white,
                                                 shape:
                                                     const RoundedRectangleBorder(
@@ -92,27 +98,33 @@ class InventoryMenu extends StatelessWidget {
                                                   if (lock) {
                                                     return;
                                                   }
-                                                  appContext.previousZone = null;
+                                                  appContext.previousZone =
+                                                      null;
                                                   appContext.currentZone.value =
                                                       site.zones[index];
-                                                  appContext.scannerController.start();
+                                                  appContext.scannerController
+                                                      .start();
                                                 },
                                                 onLongPress: () {
                                                   if (lock) {
                                                     return;
                                                   }
-                                                  appContext.previousZone = null;
+                                                  appContext.previousZone =
+                                                      null;
                                                   appContext.currentZone.value =
-                                                  site.zones[index];
-                                                  appContext.scannerController.start();
+                                                      site.zones[index];
+                                                  appContext.scannerController
+                                                      .start();
                                                 },
                                                 visualDensity:
-                                                    const VisualDensity(vertical: -3),
+                                                    const VisualDensity(
+                                                        vertical: -3),
                                                 textColor: Colors.white,
                                                 leading: IconButton(
                                                   onPressed: () {
                                                     Inventory inventory =
-                                                    appContext.currentInventory
+                                                        appContext
+                                                            .currentInventory
                                                             .value!;
                                                     inventory.zoneLockChange
                                                             .value =

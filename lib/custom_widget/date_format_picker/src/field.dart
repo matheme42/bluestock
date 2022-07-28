@@ -126,13 +126,13 @@ class DateTimeField extends StatelessWidget {
     }
 
     if (Theme.of(context).platform == TargetPlatform.iOS) {
-      final DateTime? _selectedDateTime =
+      final DateTime? selectedDateTime =
           await showCupertinoPicker(context, initialDateTime);
-      if (_selectedDateTime != null) {
-        onDateSelected!(_selectedDateTime);
+      if (selectedDateTime != null) {
+        onDateSelected!(selectedDateTime);
       }
     } else {
-      DateTime _selectedDateTime = initialDateTime;
+      DateTime selectedDateTime = initialDateTime;
 
       const List<DateTimeFieldPickerMode> modesWithDate =
           <DateTimeFieldPickerMode>[
@@ -141,11 +141,11 @@ class DateTimeField extends StatelessWidget {
       ];
 
       if (modesWithDate.contains(mode)) {
-        final DateTime? _selectedDate =
+        final DateTime? selectedDate =
             await showMaterialDatePicker(context, initialDateTime);
 
-        if (_selectedDate != null) {
-          _selectedDateTime = _selectedDate;
+        if (selectedDate != null) {
+          selectedDateTime = selectedDate;
         } else {
           return;
         }
@@ -158,21 +158,22 @@ class DateTimeField extends StatelessWidget {
       ];
 
       if (modesWithTime.contains(mode)) {
-        final TimeOfDay? _selectedTime =
+        final TimeOfDay? selectedTime =
+            // ignore: use_build_context_synchronously
             await showMaterialTimePicker(context, initialDateTime);
 
-        if (_selectedTime != null) {
-          _selectedDateTime = DateTime(
-            _selectedDateTime.year,
-            _selectedDateTime.month,
-            _selectedDateTime.day,
-            _selectedTime.hour,
-            _selectedTime.minute,
+        if (selectedTime != null) {
+          selectedDateTime = DateTime(
+            selectedDateTime.year,
+            selectedDateTime.month,
+            selectedDateTime.day,
+            selectedTime.hour,
+            selectedTime.minute,
           );
         }
       }
 
-      onDateSelected!(_selectedDateTime);
+      onDateSelected!(selectedDateTime);
     }
   }
 

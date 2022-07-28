@@ -85,11 +85,9 @@ class Import {
     if (result == null) return;
     articleCsvInLoading.value = true;
     final input = File(result.files.first.path!).openRead();
-    CsvToListConverter c = const CsvToListConverter(fieldDelimiter: csvDelimitor, shouldParseNumbers: false);
-    final fields = await input
-        .transform(latin1.decoder)
-        .transform(c)
-        .toList();
+    CsvToListConverter c = const CsvToListConverter(
+        fieldDelimiter: csvDelimitor, shouldParseNumbers: false);
+    final fields = await input.transform(latin1.decoder).transform(c).toList();
     fields.removeAt(0);
 
     var error = Checker.checkArticle(fields);
@@ -111,7 +109,8 @@ class Import {
       appContext.articleStrings.add(elm.toString().toLowerCase());
     }
     appContext.articleLoadedDate = DateTime.now();
-    await SharedPreferenceController.setArticlesDate(appContext.articleLoadedDate!);
+    await SharedPreferenceController.setArticlesDate(
+        appContext.articleLoadedDate!);
     await SharedPreferenceController.setArticles(appContext.articleStrings);
     articleCsvInLoading.value = false;
   }

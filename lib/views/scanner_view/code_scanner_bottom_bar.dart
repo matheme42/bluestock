@@ -154,7 +154,9 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
     textController.clear();
     state = false;
     _sheetController.animateTo(0.1, duration: tabAnim, curve: Curves.linear);
-    BluestockContext.of(context).scannerController.start();
+    if (BluestockContext.of(context).previousZone == null) {
+      BluestockContext.of(context).scannerController.start();
+    }
   }
 
   void jumpTo(int index) => tabContainerController.jumpTo(index);
@@ -181,11 +183,10 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
   }
 
   Future<void> addArticleCount(Article? article) async {
-
     if (article == null) {
       widget.close();
       number.value = 0;
-      return ;
+      return;
     }
 
     Zone zone = BluestockContext.of(context).currentZone.value!;
@@ -256,8 +257,8 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
                                       node: node,
                                     ),
                                     article != null
-                                        ? ArticleInfo(article: article) :
-                                         const ArticleCountList(),
+                                        ? ArticleInfo(article: article)
+                                        : const ArticleCountList(),
                                   ],
                                 ),
                               ),

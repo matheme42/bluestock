@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CodeBarSvgTile extends StatelessWidget {
-
   final String svg;
   final String data;
-  const CodeBarSvgTile({
-    Key? key,
-    required this.svg,
-    required this.data
-  }) : super(key: key);
+
+  const CodeBarSvgTile({Key? key, required this.svg, required this.data})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +15,16 @@ class CodeBarSvgTile extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Text(data, textAlign: TextAlign.center, textScaleFactor: 2,),
+          Text(
+            data,
+            textAlign: TextAlign.center,
+            textScaleFactor: 2,
+          ),
           SvgPicture.string(svg, fit: BoxFit.contain),
         ],
       ),
     );
   }
-
 }
 
 class CodeBarDemonstrator extends StatelessWidget {
@@ -34,13 +34,19 @@ class CodeBarDemonstrator extends StatelessWidget {
   List<Widget> buildBarcode() {
     List<Widget> barcodes = [];
 
-    final svg2 = Barcode.code128(useCode128A: true, useCode128B: false, useCode128C: false).toSvg('22', width: 200, height: 80);
+    final svg2 = Barcode.code128(
+            useCode128A: true, useCode128B: false, useCode128C: false)
+        .toSvg('22', width: 200, height: 80);
     barcodes.add(CodeBarSvgTile(svg: svg2, data: 'code128 A'));
 
-    final svg21 = Barcode.code128(useCode128A: false, useCode128B: true, useCode128C: false).toSvg('22', width: 200, height: 80);
+    final svg21 = Barcode.code128(
+            useCode128A: false, useCode128B: true, useCode128C: false)
+        .toSvg('22', width: 200, height: 80);
     barcodes.add(CodeBarSvgTile(svg: svg21, data: 'code128 B'));
 
-    final svg22 = Barcode.code128(useCode128A: false, useCode128B: false, useCode128C: true).toSvg('22', width: 200, height: 80);
+    final svg22 = Barcode.code128(
+            useCode128A: false, useCode128B: false, useCode128C: true)
+        .toSvg('22', width: 200, height: 80);
     barcodes.add(CodeBarSvgTile(svg: svg22, data: 'code128 C'));
 
     final svg3 = Barcode.code39().toSvg('22', width: 200, height: 80);
@@ -52,10 +58,12 @@ class CodeBarDemonstrator extends StatelessWidget {
     final svg5 = Barcode.itf().toSvg('22', width: 200, height: 80);
     barcodes.add(CodeBarSvgTile(svg: svg5, data: 'itf'));
 
-    final svg50 = Barcode.itf16().toSvg('1540014128876782', width: 200, height: 80);
+    final svg50 =
+        Barcode.itf16().toSvg('1540014128876782', width: 200, height: 80);
     barcodes.add(CodeBarSvgTile(svg: svg50, data: 'itf 16'));
 
-    final svg51 = Barcode.itf14().toSvg('15400141288763', width: 200, height: 80);
+    final svg51 =
+        Barcode.itf14().toSvg('15400141288763', width: 200, height: 80);
     barcodes.add(CodeBarSvgTile(svg: svg51, data: 'itf 14'));
 
     final svg60 = Barcode.ean8().toSvg("96385074", width: 200, height: 80);
@@ -94,5 +102,4 @@ class CodeBarDemonstrator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: buildBarcode());
   }
-
 }

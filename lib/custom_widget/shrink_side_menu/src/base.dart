@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 /// Create a SideMenu / Drawer
 ///
 class SideMenu extends StatelessWidget {
-
   final ValueNotifier<bool> opened;
 
   final int _inverse;
@@ -104,11 +103,10 @@ class SideMenu extends StatelessWidget {
     if (opened.value) {
       return Matrix4.identity()
         ..rotateZ(degToRad(-2.0 * _inverse))
-        ..translate(min(size.width, maxMenuWidth) * _inverse,
-            (size.height * 0.12))
+        ..translate(
+            min(size.width, maxMenuWidth) * _inverse, (size.height * 0.12))
         ..invertRotation();
     }
     return Matrix4.identity();
   }
 }
-

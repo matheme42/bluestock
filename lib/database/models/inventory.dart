@@ -21,11 +21,12 @@ class Inventory extends Model {
   ValueNotifier<bool> articleLoaded = ValueNotifier(false);
   ValueNotifier<bool> zoneLockChange = ValueNotifier(false);
 
-
   @override
   void fromMap(Map<String, dynamic> data) {
     data.containsKey("date") ? date = DateTime.parse(data['date']) : 0;
-    data.containsKey("process") ? process = data['process'].toString().trim() : 0;
+    data.containsKey("process")
+        ? process = data['process'].toString().trim()
+        : 0;
     data.containsKey("done")
         ? done = done = data["done"] == 0 ? false : true
         : 0;
@@ -49,7 +50,8 @@ class Inventory extends Model {
   Future<void> importArticle(List<String> data) async {
     articleLoaded.value = false;
     for (var line in data) {
-      var elm = line.toString().substring(1, line.toString().length - 1).split(',');
+      var elm =
+          line.toString().substring(1, line.toString().length - 1).split(',');
       if (elm[0].toString().toLowerCase().trim() == process) {
         var ars = ArticleStrings();
         ars.string = line.toString();
@@ -63,7 +65,6 @@ class Inventory extends Model {
     articleLoaded.value = true;
     await InventoryController().update(this);
   }
-
 
   Future<File> generateCsv() async {
     final directory = await getApplicationDocumentsDirectory();
@@ -80,16 +81,16 @@ class Inventory extends Model {
 
     for (var zone in site.zones) {
       for (var ac in zone.articlesCount) {
-          String line =
-              "${ac.article.process.toUpperCase()},"
-              "${DateFormat.yMd().format(date)},"
-              "${site.name},"
-              "${zone.num},"
-              "${ac.article.codeProduct},"
-              "${ac.number},"
-              "${ac.commentaire}\n";
-          await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
-      }}
+        String line = "${ac.article.process.toUpperCase()},"
+            "${DateFormat.yMd().format(date)},"
+            "${site.name},"
+            "${zone.num},"
+            "${ac.article.codeProduct},"
+            "${ac.number},"
+            "${ac.commentaire}\n";
+        await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
+      }
+    }
     return (file);
   }
 }

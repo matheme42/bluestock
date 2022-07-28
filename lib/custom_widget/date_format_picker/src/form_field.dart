@@ -40,11 +40,11 @@ class DateTimeFormField extends FormField<DateTime> {
           enabled: enabled,
           builder: (FormFieldState<DateTime> field) {
             // Theme defaults are applied inside the _InputDropdown widget
-            final InputDecoration _decorationWithThemeDefaults =
+            final InputDecoration decorationWithThemeDefaults =
                 decoration ?? const InputDecoration();
 
             final InputDecoration effectiveDecoration =
-                _decorationWithThemeDefaults.copyWith(
+                decorationWithThemeDefaults.copyWith(
                     errorText: field.errorText);
 
             void onChangedHandler(DateTime value) {

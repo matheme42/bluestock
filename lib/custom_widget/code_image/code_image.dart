@@ -5,13 +5,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CodeImage extends StatelessWidget {
   final String code;
   final String? type;
+  final BoxFit? fit;
 
-  const CodeImage({Key? key, required this.code, required this.type})
+  const CodeImage({Key? key, required this.code, required this.type, this.fit})
       : super(key: key);
 
   Widget buildBarcode() {
     double height = 80;
-    if (type == 'BarcodeFormat.qrCode' || type == 'BarcodeFormat.aztec' || type == 'BarcodeFormat.dataMatrix') {
+    if (type == 'BarcodeFormat.qrCode' ||
+        type == 'BarcodeFormat.aztec' ||
+        type == 'BarcodeFormat.dataMatrix') {
       height = 200;
     }
     Barcode bc = getBarcodeType(type);
@@ -22,7 +25,7 @@ class CodeImage extends StatelessWidget {
       width: 200,
       height: height,
     );
-    return SvgPicture.string(svgString, fit: BoxFit.cover);
+    return SvgPicture.string(svgString, fit: fit ?? BoxFit.cover);
   }
 
   Barcode getBarcodeType(String? type) {

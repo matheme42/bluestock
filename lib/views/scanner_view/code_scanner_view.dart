@@ -53,8 +53,6 @@ class BarcodeScannerState extends State<BarcodeScanner> {
 
   void exitEnter() {
     BluestockContext appContext = BluestockContext.of(context);
-    scannerBottomBarKey.currentState?.jumpTo(0);
-    scannerBottomBarKey.currentState?.close();
     if (appContext.previousZone != null) {
       appContext.currentZone.value = appContext.previousZone;
       appContext.previousZone = null;
@@ -63,6 +61,8 @@ class BarcodeScannerState extends State<BarcodeScanner> {
     }
     appContext.scannerController.stop();
     appContext.previousZone = appContext.currentZone.value;
+    scannerBottomBarKey.currentState?.jumpTo(0);
+    scannerBottomBarKey.currentState?.close();
     appContext.currentZone.value = null;
   }
 
@@ -85,7 +85,6 @@ class BarcodeScannerState extends State<BarcodeScanner> {
               onDetect: (Barcode barcode, _) {
                 onDetect(barcode.rawValue, barcode.format.toString());
               }),
-
           ScannerBottomBar(
             key: scannerBottomBarKey,
             widgetCode: widgetCode,

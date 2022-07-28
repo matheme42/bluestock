@@ -1,13 +1,14 @@
-import 'package:accordion/accordion.dart';
-import 'package:accordion/controllers.dart';
+
+import 'package:bluestock/custom_widget/accordeon/accordion.dart';
+import 'package:bluestock/custom_widget/accordeon/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HelpInventaire extends StatelessWidget {
   const HelpInventaire({Key? key}) : super(key: key);
 
   final _contentStyle = const TextStyle(
       color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
-
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +17,10 @@ class HelpInventaire extends StatelessWidget {
       child: Accordion(
           maxOpenSections: 1,
           headerBackgroundColorOpened: Colors.black54,
-          scaleWhenAnimating: true,
+          scaleWhenAnimating: false,
           openAndCloseAnimation: true,
-          headerPadding: const EdgeInsets.symmetric(
-              vertical: 7, horizontal: 15),
+          headerPadding:
+              const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
           sectionClosingHapticFeedback: SectionHapticFeedback.light,
           children: [
@@ -28,10 +29,12 @@ class HelpInventaire extends StatelessWidget {
               leftIcon: const Icon(Icons.import_contacts, color: Colors.white),
               headerBackgroundColor: Colors.blue,
               headerBackgroundColorOpened: Colors.deepPurple,
-              header: const Text(
-                  'Cette page', style: TextStyle(color: Colors.white70)),
+              header: Text('this_page'.tr,
+                  style: const TextStyle(color: Colors.white70)),
               content: Text(
-                'Permet de diriger son inventaire', style: _contentStyle,),
+                'Permet de diriger son inventaire',
+                style: _contentStyle,
+              ),
               contentHorizontalPadding: 20,
               contentBorderWidth: 1,
             ),
@@ -44,12 +47,12 @@ class HelpInventaire extends StatelessWidget {
                   style: TextStyle(color: Colors.white70)),
               content: Text(
                 'Donne la liste complete des articles déjà ajoutés dans chaque zone',
-                style: _contentStyle,),
+                style: _contentStyle,
+              ),
               contentHorizontalPadding: 20,
               contentBorderWidth: 1,
             ),
           ]),
     );
   }
-
 }

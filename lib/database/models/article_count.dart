@@ -12,6 +12,9 @@ class ArticleCount extends Model {
   /// quantité retenue
   late int number;
 
+  /// type de codebar utilisé
+  String codeBarType = "";
+
   /// commentaire associé
   String commentaire = "";
 
@@ -19,6 +22,7 @@ class ArticleCount extends Model {
   Map<String, dynamic> asMap() {
     Map<String, dynamic> message = {};
     message['number'] = number;
+    message['codebartype'] = codeBarType;
     message['commentaire'] = commentaire;
     message.addAll(super.asMap());
     return message;

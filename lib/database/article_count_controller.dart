@@ -53,8 +53,7 @@ class ArticleCountController {
         ..zone = zone
         ..number = articleCount['number']
         ..article = article
-        ..commentaire = articleCount['commentaire']
-      );
+        ..commentaire = articleCount['commentaire']);
     }
     return (articleCounts);
   }
