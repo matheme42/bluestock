@@ -13,38 +13,46 @@ class ArticlesField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appContext = BluestockContext.of(context);
-    return MaterialButton(
-      padding: EdgeInsets.zero,
-      elevation: 0,
-      splashColor: Colors.transparent,
-      onPressed: () => Import.articlesCsv(context, inventory),
-      child: ValueListenableBuilder(
-          valueListenable: Import.articleCsvInLoading,
-          builder: (context, value, _) {
-            TextEditingController a = TextEditingController();
-            if (appContext.articleLoadedDate != null) {
-              a.text =
-                  "${'articlebasedate'.tr} ${DateFormat.yMd().format(appContext.articleLoadedDate!)}";
-            }
-            return TextFormField(
-              enabled: false,
-              controller: a,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                labelStyle: const TextStyle(color: Colors.white),
-                counterStyle: const TextStyle(color: Colors.white),
-                hintStyle: const TextStyle(color: Colors.white),
-                helperStyle: const TextStyle(color: Colors.white),
-                border: OutlineInputBorder(
-                  borderSide: const BorderSide(),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                labelText: 'Articles',
-                prefixIcon: const Icon(
-                  Icons.article,
-                  color: Colors.white,
-                ),
-                counter: ValueListenableBuilder(
+    return ValueListenableBuilder(
+        valueListenable: Import.articleCsvInLoading,
+        builder: (context, value, _) {
+          TextEditingController a = TextEditingController();
+          if (appContext.articleLoadedDate != null) {
+            a.text =
+                "${'articlebasedate'.tr} ${DateFormat.yMd().format(appContext.articleLoadedDate!)}";
+          }
+          return Column(
+            children: [
+              MaterialButton(
+                  padding: EdgeInsets.zero,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  splashColor: Colors.transparent,
+                  onPressed: () => Import.articlesCsv(context, inventory),
+                  child: TextFormField(
+                    enabled: false,
+                    controller: a,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelStyle: const TextStyle(color: Colors.white),
+                      counterStyle: const TextStyle(color: Colors.white),
+                      hintStyle: const TextStyle(color: Colors.white),
+                      helperStyle: const TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      labelText: 'Articles',
+                      prefixIcon: const Icon(
+                        Icons.article,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )),
+              Align(
+                alignment: const Alignment(0.8, 0),
+                child: ValueListenableBuilder(
                   valueListenable: Import.articleCsvInLoading,
                   builder: (context, value, _) {
                     return Text(
@@ -56,8 +64,8 @@ class ArticlesField extends StatelessWidget {
                   },
                 ),
               ),
-            );
-          }),
-    );
+            ],
+          );
+        });
   }
 }

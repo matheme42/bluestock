@@ -1,7 +1,6 @@
 import 'package:bluestock/context/context.dart';
 import 'package:bluestock/database/shared_preference_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:get/get.dart';
 
 const String cguString = r'''

@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
 class ArticleCountList extends StatefulWidget {
-  const ArticleCountList({Key? key}) : super(key: key);
+  final Function update;
+
+  const ArticleCountList(this.update, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -86,11 +88,13 @@ class ArticleCountListState extends State<ArticleCountList> {
                     ),
                     onTap: () {
                       ArticleCountController().delete(ac).then((_) {
+
                         setState(() {
                           var appCon = BluestockContext.of(context);
                           appCon.currentZone.value!.articlesCount.remove(ac);
                           articleCount.remove(ac);
                         });
+                        widget.update();
                       });
                     },
                   ),

@@ -31,8 +31,7 @@ class HelpBluestock extends StatelessWidget {
               header: Text('this_page'.tr,
                   style: const TextStyle(color: Colors.white70)),
               content: Text(
-                'Contient la liste de tous les inventaires réalisés\n'
-                'Contient également les inventaires en cours de réalisation',
+                'help_welcome_page'.tr,
                 style: _contentStyle,
               ),
               contentHorizontalPadding: 20,
@@ -40,7 +39,7 @@ class HelpBluestock extends StatelessWidget {
             ),
             AccordionSection(
               isOpen: false,
-              leftIcon: const Icon(Icons.date_range, color: Colors.white),
+              leftIcon: const Icon(Icons.qr_code_2_rounded, color: Colors.white),
               headerBackgroundColor: Colors.blue,
               headerBackgroundColorOpened: Colors.deepPurple,
               header: Text('supported_barcode'.tr,

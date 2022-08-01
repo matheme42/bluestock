@@ -4,6 +4,7 @@ import 'package:bluestock/database/models/article.dart';
 import 'package:bluestock/views/scanner_view/code_scanner_app_bar.dart';
 import 'package:bluestock/views/scanner_view/code_scanner_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class BarcodeScannerState extends State<BarcodeScanner> {
@@ -15,7 +16,7 @@ class BarcodeScannerState extends State<BarcodeScanner> {
     BluestockContext appContext = BluestockContext.of(context);
     List<Article> articles = appContext.currentInventory.value!.articles;
 
-    String articleTitle = 'non définie';
+    String articleTitle = 'not_define'.tr;
     Article? a;
     try {
       a = articles.firstWhere((elm) => elm.code == code);
@@ -36,6 +37,7 @@ class BarcodeScannerState extends State<BarcodeScanner> {
     var a = articles.firstWhere((elm) => elm.commercialDenomination == name);
     appContext.scannerController.stop();
     widgetCode.value = CodeImage(code: a.code, type: null);
+    CodeScannerAppBar.open(a.commercialDenomination);
     articleFound.value = a;
     scannerBottomBarKey.currentState?.open();
   }

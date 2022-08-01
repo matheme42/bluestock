@@ -23,7 +23,6 @@ Future <void> main() async {
       GlobalWidgetsLocalizations.delegate,
       GlobalCupertinoLocalizations.delegate,
     ],
-    supportedLocales: const [Locale('en', ''), Locale('fr', '')],
     appContext: appContext,
     initialRoute: '/',
     debugShowCheckedModeBanner: false,

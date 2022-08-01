@@ -23,8 +23,9 @@ class WelcomePage extends StatelessWidget {
         backgroundColor: const Color(0xFF112473),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          leading: Padding(padding: const EdgeInsets.all(6),
-          child: Image.asset('assets/logo.png')),
+          leading: Padding(
+              padding: const EdgeInsets.all(6),
+              child: Image.asset('assets/logo.png')),
           title: Text('title'.tr),
           actions: [
             ValueListenableBuilder<bool>(
@@ -44,62 +45,62 @@ class WelcomePage extends StatelessWidget {
             child: ValueListenableBuilder(
                 valueListenable: appContext.updater,
                 builder: (context, value, _) {
-                  return ListView.builder(
-                      itemCount: appContext.inventories.length,
-                      itemBuilder: (context, index) {
-                        Inventory inventory =
-                            appContext.inventories.reversed.toList()[index];
-                        return ListTile(
-                          onTap: () {
-                            if (inventory.done == true) {
-                              inventoryResumePopup(context, inventory);
-                              return;
-                            }
-                            appContext.currentInventory.value = inventory;
-                          },
-                          onLongPress: () {
-                            if (inventory.done == true) {
-                              inventoryResumePopup(context, inventory);
-                              return;
-                            }
-                            appContext.currentInventory.value = inventory;
-                          },
-                          title: AutoSizeText(
-                            inventory.site.name,
-                            group: autoSizeGroup,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(color: Colors.white),
-                            maxLines: 1,
-                          ),
-                          subtitle: const AutoSizeText(
-                            '',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
-                            maxLines: 1,
-                          ),
-                          isThreeLine: true,
-                          trailing: AutoSizeText(
-                            DateFormat.yMd().format(inventory.date),
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          leading: !inventory.done
-                              ? SizedBox(
-                                  width: 70,
-                                  child: AnimatedTextKit(
-                                    repeatForever: true,
-                                    animatedTexts: [
-                                      FlickerAnimatedText('in_progress'.tr,
-                                          entryEnd: 0.3,
-                                          textStyle: const TextStyle(
-                                              color: Colors.purple)),
-                                    ],
-                                  ),
-                                )
-                              : const SizedBox(
-                                  width: 70,
-                                ),
-                        );
-                      });
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                        itemCount: appContext.inventories.length,
+                        itemBuilder: (context, index) {
+                          Inventory inventory =
+                              appContext.inventories.reversed.toList()[index];
+                          return ListTile(
+                              onTap: () {
+                                if (inventory.done == true) {
+                                  inventoryResumePopup(context, inventory);
+                                  return;
+                                }
+                                appContext.currentInventory.value = inventory;
+                              },
+                              onLongPress: () {
+                                if (inventory.done == true) {
+                                  inventoryResumePopup(context, inventory);
+                                  return;
+                                }
+                                appContext.currentInventory.value = inventory;
+                              },
+                              title: AutoSizeText(
+                                inventory.site.name,
+                                group: autoSizeGroup,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(color: Colors.white),
+                                maxLines: 1,
+                              ),
+                              isThreeLine: false,
+                              trailing: AutoSizeText(
+                                DateFormat.yMd().format(inventory.date),
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              leading: !inventory.done
+                                  ? SizedBox(
+                                      width: 70,
+                                      child: AnimatedTextKit(
+                                        repeatForever: true,
+                                        animatedTexts: [
+                                          FlickerAnimatedText(
+                                            'in_progress'.tr,
+                                            entryEnd: 0.3,
+                                            textStyle: const TextStyle(
+                                              color: Colors.purple,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : const SizedBox(
+                                      width: 70,
+                                    ),
+                          );
+                        }),
+                  );
                 }),
             builder: (context, value, child) {
               return AnimatedSwitcher(
@@ -109,8 +110,10 @@ class WelcomePage extends StatelessWidget {
         bottomNavigationBar: ValueListenableBuilder<bool>(
             valueListenable: BluestockContext.of(context).cguAccepted,
             child: ListTile(
-              onLongPress: () => BluestockContext.of(context).cguAccepted.value = false,
-              onTap: () => BluestockContext.of(context).cguAccepted.value = false,
+              onLongPress: () =>
+                  BluestockContext.of(context).cguAccepted.value = false,
+              onTap: () =>
+                  BluestockContext.of(context).cguAccepted.value = false,
               title: AutoSizeText(
                 'all_right'.tr,
                 maxLines: 1,
@@ -129,7 +132,7 @@ class WelcomePage extends StatelessWidget {
                       appContext.language = l;
                       Get.updateLocale(l);
                     });
-                    return ;
+                    return;
                   }
                   Locale l = const Locale('fr', 'FR');
                   SharedPreferenceController.setLanguage(l).then((_) {

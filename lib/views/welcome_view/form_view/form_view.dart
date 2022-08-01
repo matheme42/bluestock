@@ -5,7 +5,7 @@ import 'package:bluestock/database/models/site.dart';
 import 'package:bluestock/database/models/zone.dart';
 import 'package:bluestock/database/site_controller.dart';
 import 'package:bluestock/database/zone_controller.dart';
-import 'package:bluestock/views/helper/file_format.dart';
+import 'package:bluestock/views/helper/inventaire_new.dart';
 import 'package:bluestock/views/helper/popup.dart';
 import 'package:bluestock/views/welcome_view/form_view/form_body.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class CustomValidator {
         value == false ||
         ((value is Iterable || value is String || value is Map) &&
             value.length == 0)) {
-      return "doit etre renseigné";
+      return "not_empty".tr;
     }
     return null;
   }

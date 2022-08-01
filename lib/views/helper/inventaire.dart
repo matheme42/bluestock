@@ -32,7 +32,7 @@ class HelpInventaire extends StatelessWidget {
               header: Text('this_page'.tr,
                   style: const TextStyle(color: Colors.white70)),
               content: Text(
-                'Permet de diriger son inventaire',
+                'help_inventory_page'.tr,
                 style: _contentStyle,
               ),
               contentHorizontalPadding: 20,
@@ -43,10 +43,10 @@ class HelpInventaire extends StatelessWidget {
               leftIcon: const Icon(Icons.article_outlined, color: Colors.white),
               headerBackgroundColor: Colors.blue,
               headerBackgroundColorOpened: Colors.deepPurple,
-              header: const Text("resumé de l'inventaire",
-                  style: TextStyle(color: Colors.white70)),
+              header: Text("inventory_resume".tr,
+                  style: const TextStyle(color: Colors.white70)),
               content: Text(
-                'Donne la liste complete des articles déjà ajoutés dans chaque zone',
+                'help_inventory_resume'.tr,
                 style: _contentStyle,
               ),
               contentHorizontalPadding: 20,

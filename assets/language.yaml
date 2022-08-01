@@ -8,6 +8,7 @@ en_US:
   new_inventory: 'new inventory'
   accept: 'accept'
   back: 'back'
+  add: 'Add'
   articlebasedate: 'base of'
   update: 'update'
   importer_article: 'import article list'
@@ -19,6 +20,33 @@ en_US:
   remove: 'Remove'
   edit: 'Edit'
   export: 'Export'
+  help_welcome_page: 'contain the list of all inventories'
+  help_inventory_page: 'Allow you to manage your inventory'
+  inventory_resume: 'inventory resume'
+  help_inventory_resume: 'give a list of articles already scan'
+  comment: 'comment'
+  help_start_inventory: 'start an inventory'
+  help_start_inventory_date: "This field corresponds to the date when the inventory will be start"
+  help_start_inventory_process: "
+This field corresponds to a list of process.\n
+if this field is empty click on 'import process list'.\n
+Then click on the CSV file with separator ',' corresponds to the list of your process\n\n
+see exemple file below\n
+"
+  help_start_inventory_site: "
+This field corresponds to a list of site.\n
+if this field is empty click on 'import site list'.\n
+Then click on the CSV file with separator ',' corresponds to the list of your site\n\n
+see exemple file below
+"
+  help_start_inventory_article: "
+click on 'import storage places'.\n
+Then click on the CSV file with separator ',' corresponds to the list of your places\n\n
+see exemple file below\n
+"
+  not_define: 'not define'
+  not_empty: "can't be empty"
+  list_empty: 'Empty'
 fr_FR:
   title: 'Bluestock'
   all_right: 'Tous droits reservés 2021'
@@ -29,6 +57,7 @@ fr_FR:
   new_inventory: 'nouvel inventaire'
   accept: 'accepter'
   back: 'retour'
+  add: 'Ajouter'
   articlebasedate: 'Base articles du'
   update: 'mettre a jour'
   importer_article: "importer une liste d'articles"
@@ -40,3 +69,34 @@ fr_FR:
   remove: 'Supprimer'
   edit: 'Rectifier'
   export: 'Exporter'
+  help_welcome_page: '
+  Contient la liste de tous les inventaires réalisés
+  Contient également les inventaires en cours de réalisation,
+  '
+  help_inventory_page: 'Permet de diriger son inventaire'
+  inventory_resume: "resumé de l'inventaire"
+  help_inventory_resume: 'Donne la liste complete des articles déjà ajoutés dans chaque zone'
+  comment: 'commentaire'
+  help_start_inventory: 'Démarrer un nouvel inventaire'
+  help_start_inventory_date: "Correspond a la date a laquel sera réalisé l'inventaire"
+  help_start_inventory_process: "
+Ce champs correspond a la liste des process disponible pour l'inventaire.\n
+Si ce champs est vide cliquer sur 'ajouter une liste de process'.\n
+Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos process\n\n
+Retouver un fichier d'exemple ci-dessous\n
+  "
+  help_start_inventory_site: "
+Ce champs correspond a la liste des différents lieux de stockage, triés par site
+Si ce champs est vide cliquer sur 'importer la liste des lieux'.\n
+Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos zones\n\n
+Retouver un fichier d'exemple ci-dessous\n
+"
+  help_start_inventory_article: "
+  cliquer sur 'importer des articles'.\n
+  Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos articles\n\n
+  Retouver un fichier d'exemple ci-dessous\n
+  "
+  not_define: 'non défini'
+  not_empty: "doit etre renseigné"
+  list_empty: 'Vide'
+

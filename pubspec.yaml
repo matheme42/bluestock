@@ -59,6 +59,8 @@ dependencies:
   yaml: ^3.1.1
   expandable: ^5.0.1
   scroll_to_index: ^3.0.1
+  badges: ^2.0.3
+  dropdown_search: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +82,18 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/logo.png"
+
+flutter_native_splash:
+  color: "#112473"
+  image: assets/logo.png
+  color_dark: "#121212"
+  image_dark: assets/logo.png
+  android_12:
+    image: assets/logo.png
+    icon_background_color: "#112473"
+    image_dark: assets/logo.png
+    icon_background_color_dark: "#121212"
+  web: false
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -120,15 +134,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
-flutter_native_splash:
-  color: "#112473"
-  image: assets/logo.png
-  color_dark: "#121212"
-  image_dark: assets/logo.png
-  android_12:
-    image: assets/logo.png
-    icon_background_color: "#112473"
-    image_dark: assets/logo.png
-    icon_background_color_dark: "#121212"
-  web: false

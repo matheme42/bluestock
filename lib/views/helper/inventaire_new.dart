@@ -103,7 +103,7 @@ class HelpFileFormat extends StatelessWidget {
               headerBackgroundColorOpened: Colors.deepPurple,
               header: Text('this_page'.tr,
                   style: const TextStyle(color: Colors.white70)),
-              content: Text('Permet de démarrer un nouvel inventaire',
+              content: Text('help_start_inventory'.tr,
                   style: _contentStyle),
               contentHorizontalPadding: 20,
               contentBorderWidth: 1,
@@ -117,11 +117,7 @@ class HelpFileFormat extends StatelessWidget {
                   style: TextStyle(color: Colors.white70)),
               content: Column(
                 children: [
-                  Text(
-                      "Ce champs correspond a la liste des process disponible pour l'inventaire."
-                      " Si ce champs est vide cliquer sur 'ajouter une liste de process'.\n"
-                      "Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos process\n\n"
-                      "Retouver un fichier d'exemple ci-dessous\n",
+                  Text("help_start_inventory_process".tr,
                       style: _contentStyle),
                   MaterialButton(
                     color: Colors.deepPurple,
@@ -148,21 +144,14 @@ class HelpFileFormat extends StatelessWidget {
               headerBackgroundColorOpened: Colors.deepPurple,
               content: Column(
                 children: [
-                  Text(
-                      "Ce champs correspond a la liste des différents lieux de stockage, triés par site"
-                      " Si ce champs est vide cliquer sur 'importer la liste des lieux'.\n"
-                      "Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos zones\n\n"
-                      "Retouver un fichier d'exemple ci-dessous\n",
-                      style: _contentStyle),
+                  Text("help_start_inventory_site".tr, style: _contentStyle),
                   MaterialButton(
                     color: Colors.deepPurple,
                     child: const Text(
                       "sites_exemple.csv",
                       style: TextStyle(color: Colors.white70),
                     ),
-                    onPressed: () {
-                      exportSiteExempleFile();
-                    },
+                    onPressed: () => exportSiteExempleFile()
                   )
                 ],
               ),
@@ -174,9 +163,7 @@ class HelpFileFormat extends StatelessWidget {
               headerBackgroundColorOpened: Colors.deepPurple,
               header:
                   const Text('Date', style: TextStyle(color: Colors.white70)),
-              content: Text(
-                  '''Ce champs correspond a la date ou sera réalisé l'inventaire''',
-                  style: _contentStyle),
+              content: Text('help_start_inventory_date'.tr, style: _contentStyle),
               contentHorizontalPadding: 20,
               contentBorderWidth: 1,
             ),
@@ -189,11 +176,7 @@ class HelpFileFormat extends StatelessWidget {
                   style: TextStyle(color: Colors.white70)),
               content: Column(
                 children: [
-                  Text(
-                      "cliquer sur 'importer des articles'.\n"
-                      "Puis cliquer sur le fichier CSV séparateur ',' correspondant a la liste de vos articles\n\n"
-                      "Retouver un fichier d'exemple ci-dessous\n",
-                      style: _contentStyle),
+                  Text("help_start_inventory_article".tr, style: _contentStyle),
                   MaterialButton(
                       color: Colors.deepPurple,
                       child: const Text(

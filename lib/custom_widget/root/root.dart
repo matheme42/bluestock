@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -123,7 +124,7 @@ class Root<T extends ChangeNotifier> extends StatelessWidget {
   final String initialRoute;
 
   /// internationalisation
-  final Iterable<Locale> supportedLocales;
+  final List<Locale> supportedLocales = [];
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
   final Locale? locale;
 
@@ -166,7 +167,6 @@ class Root<T extends ChangeNotifier> extends StatelessWidget {
     this.onKeyBoardChange,
     this.onTurnBackground,
     this.onTurnForeground,
-    this.supportedLocales = const <Locale>[Locale('en', 'US')],
     this.localizationsDelegates,
     this.locale,
     this.debugShowCheckedModeBanner = true,
@@ -189,6 +189,10 @@ class Root<T extends ChangeNotifier> extends StatelessWidget {
     await Future.delayed(const Duration(milliseconds: 500));
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     await translations.import(languageYamlPath);
+    translations.data.forEach((key, _) {
+      Locale locale = Locale(key.substring(0, 2), key.substring(3, 5));
+      supportedLocales.add(locale);
+    });
     preLoading != null ? await preLoading!(appContext) : 0;
     runApp(this);
   }

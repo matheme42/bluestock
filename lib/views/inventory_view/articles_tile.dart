@@ -20,7 +20,7 @@ class ArticleTile extends StatelessWidget {
       String key = Article.keysInfo[i].toString();
       String value = map.values.elementAt(i).toString();
       if (value.isEmpty) {
-        value = 'non défini';
+        value = 'not_define'.tr;
       }
       list.add(Container(
         height: 50,

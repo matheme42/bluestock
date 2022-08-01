@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:bluestock/context/context.dart';
 import 'package:bluestock/custom_widget/number_picker/number_picker.dart';
 import 'package:bluestock/database/article_count_controller.dart';
@@ -6,6 +7,7 @@ import 'package:bluestock/database/models/article_count.dart';
 import 'package:bluestock/database/models/zone.dart';
 import 'package:bluestock/views/scanner_view/code_scanner_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tab_container/tab_container.dart';
 
 class ArticleInfo extends StatelessWidget {
@@ -98,9 +100,9 @@ class AddArticleCount extends StatelessWidget {
                     child: TextField(
                       focusNode: node,
                       controller: textController,
-                      decoration: const InputDecoration(
-                          labelText: 'commentaire',
-                          border: OutlineInputBorder(
+                      decoration: InputDecoration(
+                          labelText: 'comment'.tr,
+                          border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5)))),
                     ),
@@ -108,7 +110,7 @@ class AddArticleCount extends StatelessWidget {
                 : const SizedBox.shrink(),
             MaterialButton(
               onPressed: onPressed,
-              child: Text(article != null ? 'Ajouter' : 'retour'),
+              child: Text(article != null ? 'add'.tr : 'back'.tr),
             )
           ],
         ),
@@ -205,6 +207,10 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
     number.value = 0;
   }
 
+  ValueNotifier updateBadge = ValueNotifier(false);
+
+  void updateBottomBar() => updateBadge.value = !updateBadge.value;
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -243,9 +249,31 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
                                   tabCurve: Curves.easeIn,
                                   radius: 20,
                                   controller: tabContainerController,
-                                  tabs: const [
-                                    Icon(Icons.home_outlined),
-                                    Icon(Icons.insert_drive_file_outlined),
+                                  tabs: [
+                                    const Icon(Icons.home_outlined),
+                                    ValueListenableBuilder<Zone?>(
+                                      valueListenable: BluestockContext.of(context).currentZone,
+                                      builder: (context, value, _) {
+                                        if (value == null) {
+                                          return const Icon(Icons.insert_drive_file_outlined);
+                                        }
+                                        return ValueListenableBuilder(
+                                          valueListenable: updateBadge,
+                                          builder: (context, _, child) {
+                                            return Badge(
+                                                badgeColor: Colors.blue,
+                                                badgeContent:
+                                                Text(value.articlesCount.length.toString(),
+                                                  style: const TextStyle(
+                                                    color: Colors.white
+                                                )),
+                                                position: BadgePosition.topEnd(end: -30),
+                                                child:
+                                                const Icon(Icons.insert_drive_file_outlined));
+                                          }
+                                        );
+                                      }
+                                    ),
                                   ],
                                   children: [
                                     AddArticleCount(
@@ -258,7 +286,7 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
                                     ),
                                     article != null
                                         ? ArticleInfo(article: article)
-                                        : const ArticleCountList(),
+                                        : ArticleCountList(updateBottomBar),
                                   ],
                                 ),
                               ),
