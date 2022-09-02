@@ -18,12 +18,15 @@ class ArticleCount extends Model {
   /// commentaire associé
   String commentaire = "";
 
+  DateTime? peremption;
+
   @override
   Map<String, dynamic> asMap() {
     Map<String, dynamic> message = {};
     message['number'] = number;
     message['codebartype'] = codeBarType;
     message['commentaire'] = commentaire;
+    message['peremption'] = peremption != null ? peremption!.toIso8601String() : "";
     message.addAll(super.asMap());
     return message;
   }

@@ -29,24 +29,28 @@ en_US:
   help_start_inventory_date: "This field corresponds to the date when the inventory will be start"
   help_start_inventory_process: "
 This field corresponds to a list of process.\n
-if this field is empty click on 'import process list'.\n
-Then click on the CSV file with separator ',' corresponds to the list of your process\n\n
+if this field is empty click on 'update'.\n
+Then click on the CSV file with separator ';' corresponds to the list of your process\n\n
 see exemple file below\n
 "
   help_start_inventory_site: "
 This field corresponds to a list of site.\n
-if this field is empty click on 'import site list'.\n
-Then click on the CSV file with separator ',' corresponds to the list of your site\n\n
+if this field is empty click on 'update'.\n
+Then click on the CSV file with separator ';' corresponds to the list of your site\n\n
 see exemple file below
 "
   help_start_inventory_article: "
 click on 'import storage places'.\n
-Then click on the CSV file with separator ',' corresponds to the list of your places\n\n
+Then click on the CSV file with separator ';' corresponds to the list of your places\n\n
 see exemple file below\n
 "
   not_define: 'not define'
   not_empty: "can't be empty"
   list_empty: 'Empty'
+  peremption: 'expiration date'
+
+
+
 fr_FR:
   title: 'Bluestock'
   all_right: 'Tous droits reservés 2021'
@@ -81,22 +85,23 @@ fr_FR:
   help_start_inventory_date: "Correspond a la date a laquel sera réalisé l'inventaire"
   help_start_inventory_process: "
 Ce champs correspond a la liste des process disponible pour l'inventaire.\n
-Si ce champs est vide cliquer sur 'ajouter une liste de process'.\n
-Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos process\n\n
+Si ce champs est vide cliquer sur 'mettre a jour'.\n
+Puis cliquer sur le fichier CSV séparateur ';' correspondent a la liste de vos process\n\n
 Retouver un fichier d'exemple ci-dessous\n
   "
   help_start_inventory_site: "
 Ce champs correspond a la liste des différents lieux de stockage, triés par site
-Si ce champs est vide cliquer sur 'importer la liste des lieux'.\n
-Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos zones\n\n
+Si ce champs est vide cliquer sur 'mettre a jour'.\n
+Puis cliquer sur le fichier CSV séparateur ';' correspondent a la liste de vos zones\n\n
 Retouver un fichier d'exemple ci-dessous\n
 "
   help_start_inventory_article: "
   cliquer sur 'importer des articles'.\n
-  Puis cliquer sur le fichier CSV séparateur ',' correspondent a la liste de vos articles\n\n
+  Puis cliquer sur le fichier CSV séparateur ';' correspondent a la liste de vos articles\n\n
   Retouver un fichier d'exemple ci-dessous\n
   "
   not_define: 'non défini'
   not_empty: "doit etre renseigné"
   list_empty: 'Vide'
+  peremption: 'date de péremption'
 

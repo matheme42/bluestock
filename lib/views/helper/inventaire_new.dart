@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bluestock/context/context.dart';
 import 'package:bluestock/custom_widget/accordeon/accordion.dart';
 import 'package:bluestock/custom_widget/accordeon/controllers.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,6 @@ class HelpFileFormat extends StatelessWidget {
     if (await file.exists()) {
       file.delete();
     }
-
     String line = "process\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
     line = "doit etre unique\n";
@@ -50,19 +50,22 @@ class HelpFileFormat extends StatelessWidget {
     if (await file.exists()) {
       file.delete();
     }
-    String line = "secteur,site,numero,lieu\n";
+    const csvDelimitor = BluestockContext.csvDelimitor;
+
+
+    String line = "secteur${csvDelimitor}site${csvDelimitor}numero${csvDelimitor}lieu\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
-    line = "*,*,doit etre unique,*\n";
+    line = "*${csvDelimitor}*${csvDelimitor}doit etre unique,*\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
-    line = "RHONE, LYON,172,Armoire\n";
+    line = "RHONE${csvDelimitor}LYON${csvDelimitor}172${csvDelimitor}Armoire\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
-    line = "RHONE, LYON,184,Armoire 2\n";
+    line = "RHONE${csvDelimitor} LYON${csvDelimitor}184${csvDelimitor}Armoire 2\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
-    line = "RHONE, LYON,195,Frigo 1\n";
+    line = "RHONE${csvDelimitor}LYON${csvDelimitor}195${csvDelimitor}Frigo 1\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
-    line = "RHONE, LYON,196,Frigo 2\n";
+    line = "RHONE${csvDelimitor}LYON${csvDelimitor}196${csvDelimitor}Frigo 2\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
-    line = "ILE DE FRANCE, PARIS,172,Armoire\n";
+    line = "ILE DE FRANCE${csvDelimitor}PARIS${csvDelimitor}172${csvDelimitor}Armoire\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
     await Share.shareFiles([file.path], text: "Fichier d'exemple site.csv");
   }
@@ -74,10 +77,12 @@ class HelpFileFormat extends StatelessWidget {
     if (await file.exists()) {
       file.delete();
     }
+    const csvDelimitor = BluestockContext.csvDelimitor;
+
     String line =
-        "process,code produit,Dénomination commerciale,DCI,Dénomination interne,Famille,Sous-famille,Unité de comptage,Référence marque / laboratoire,Code Barre/Qrcode\n";
+        "process${csvDelimitor}code produit${csvDelimitor}Dénomination commerciale${csvDelimitor}DCI${csvDelimitor}Dénomination interne${csvDelimitor}Famille${csvDelimitor}Sous-famille${csvDelimitor}Unité de comptage${csvDelimitor}Référence marque / laboratoire${csvDelimitor}Code Barre/Qrcode\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
-    line = "*,doit etre unique,*,*,*,*,*,*,*,*\n";
+    line = "*${csvDelimitor}doit etre unique${csvDelimitor}*${csvDelimitor}*${csvDelimitor}*${csvDelimitor}*${csvDelimitor}*${csvDelimitor}*${csvDelimitor}*${csvDelimitor}*\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
     await Share.shareFiles([file.path], text: "Fichier d'exemple site.csv");
   }

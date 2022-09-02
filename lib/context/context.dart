@@ -6,6 +6,9 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 
 class BluestockContext with ChangeNotifier {
+
+  static const csvDelimitor = ';';
+
   ValueNotifier<bool> updater = ValueNotifier(false);
 
   ValueNotifier<bool> appLoaded = ValueNotifier(false);

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bluestock/context/context.dart';
 import 'package:bluestock/database/article_controller.dart';
 import 'package:bluestock/database/inventory_controller.dart';
 import 'package:bluestock/database/models/article.dart';
@@ -76,17 +77,19 @@ class Inventory extends Model {
       file.delete();
     }
 
-    String line = "process,date,site,lieu,produit,quantité,commentaire\n";
+    String line = "process,date,site,lieu,produit,quantité,date de peremption,commentaire,\n";
     await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
+    const csvDelimitor = BluestockContext.csvDelimitor;
 
     for (var zone in site.zones) {
       for (var ac in zone.articlesCount) {
-        String line = "${ac.article.process.toUpperCase()},"
-            "${DateFormat.yMd().format(date)},"
-            "${site.name},"
-            "${zone.num},"
-            "${ac.article.codeProduct},"
-            "${ac.number},"
+        String line = "${ac.article.process.toUpperCase()}$csvDelimitor"
+            "${DateFormat.yMd().format(date)}$csvDelimitor"
+            "${site.name}$csvDelimitor"
+            "${zone.num}$csvDelimitor"
+            "${ac.article.codeProduct}$csvDelimitor"
+            "${ac.number}$csvDelimitor"
+            "${ac.peremption != null ? DateFormat.yMd().format(ac.peremption!) : 0}$csvDelimitor"
             "${ac.commentaire}\n";
         await file.writeAsString(line, encoding: latin1, mode: FileMode.append);
       }

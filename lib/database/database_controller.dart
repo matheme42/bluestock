@@ -39,7 +39,7 @@ class DatabaseController {
       await db.execute(
           'CREATE TABLE $articleStringTable (id INTEGER PRIMARY KEY, site_id INTEGER, string TEXT)');
       await db.execute(
-          'CREATE TABLE $articleCountTable (id INTEGER PRIMARY KEY, zone_id INTEGER, article_id INTEGER, number INTEGER, commentaire TEXT, codebartype TEXT)');
+          'CREATE TABLE $articleCountTable (id INTEGER PRIMARY KEY, zone_id INTEGER, article_id INTEGER, number INTEGER, commentaire TEXT, codebartype TEXT, peremption TEXT)');
     });
     return (_database!);
   }

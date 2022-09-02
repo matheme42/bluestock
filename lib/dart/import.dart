@@ -12,8 +12,6 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-const csvDelimitor = ',';
-
 class Import {
   static void sitesCsv(BuildContext context) async {
     BluestockContext appContext = BluestockContext.of(context);
@@ -27,9 +25,12 @@ class Import {
       final fields = await input
           .transform(latin1.decoder)
           .transform(const CsvToListConverter(
-              fieldDelimiter: csvDelimitor, shouldParseNumbers: false))
+              fieldDelimiter: BluestockContext.csvDelimitor, shouldParseNumbers: false))
           .toList();
       fields.removeAt(0);
+      for (var lst in fields) {
+        lst.removeRange(4, lst.length);
+      }
       var error = Checker.checkSites(fields);
       if (error != 0) {
         // ignore: use_build_context_synchronously
@@ -86,11 +87,14 @@ class Import {
     articleCsvInLoading.value = true;
     final input = File(result.files.first.path!).openRead();
     CsvToListConverter c = const CsvToListConverter(
-        fieldDelimiter: csvDelimitor, shouldParseNumbers: false);
+        fieldDelimiter: BluestockContext.csvDelimitor, shouldParseNumbers: false);
     final fields = await input.transform(latin1.decoder).transform(c).toList();
     fields.removeAt(0);
-
+    for (var lst in fields) {
+      lst.removeRange(11, lst.length);
+    }
     var error = Checker.checkArticle(fields);
+
     if (error != 0) {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -126,10 +130,12 @@ class Import {
       final fields1 = input.transform(latin1.decoder);
       final fields = await fields1
           .transform(const CsvToListConverter(
-              fieldDelimiter: csvDelimitor, shouldParseNumbers: false))
+              fieldDelimiter: BluestockContext.csvDelimitor, shouldParseNumbers: false))
           .toList();
       fields.removeAt(0);
-
+      for (var lst in fields) {
+        lst.removeRange(1, lst.length);
+      }
       var error = Checker.checkProcess(fields);
       if (error != 0) {
 // ignore: use_build_context_synchronously

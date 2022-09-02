@@ -1,6 +1,7 @@
 import 'package:bluestock/context/context.dart';
 import 'package:bluestock/dart/import.dart';
 import 'package:bluestock/database/models/inventory.dart';
+import 'package:bluestock/views/welcome_view/form_view/form_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -33,6 +34,7 @@ class ArticlesField extends StatelessWidget {
                   child: TextFormField(
                     enabled: false,
                     controller: a,
+                    validator: CustomValidator.required,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelStyle: const TextStyle(color: Colors.white),

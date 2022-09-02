@@ -53,7 +53,9 @@ class ArticleCountController {
         ..zone = zone
         ..number = articleCount['number']
         ..article = article
-        ..commentaire = articleCount['commentaire']);
+        ..commentaire = articleCount['commentaire']
+        ..peremption = articleCount['peremption'] == "" ? null : DateTime.parse(articleCount['peremption'])
+      );
     }
     return (articleCounts);
   }

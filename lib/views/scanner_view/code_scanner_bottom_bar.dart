@@ -1,13 +1,16 @@
 import 'package:badges/badges.dart';
 import 'package:bluestock/context/context.dart';
+import 'package:bluestock/custom_widget/date_format_picker/date_field.dart';
 import 'package:bluestock/custom_widget/number_picker/number_picker.dart';
 import 'package:bluestock/database/article_count_controller.dart';
 import 'package:bluestock/database/models/article.dart';
 import 'package:bluestock/database/models/article_count.dart';
 import 'package:bluestock/database/models/zone.dart';
 import 'package:bluestock/views/scanner_view/code_scanner_list.dart';
+import 'package:bluestock/views/welcome_view/form_view/form_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:tab_container/tab_container.dart';
 
 class ArticleInfo extends StatelessWidget {
@@ -63,6 +66,7 @@ class AddArticleCount extends StatelessWidget {
   final FocusNode node;
   final ValueNotifier<int> number;
   final TextEditingController textController;
+  final ValueNotifier<DateTime?> peremption;
   final Function() onPressed;
   final Widget? codeBar;
 
@@ -74,6 +78,7 @@ class AddArticleCount extends StatelessWidget {
     required this.textController,
     required this.onPressed,
     required this.codeBar,
+    required this.peremption,
   }) : super(key: key);
 
   @override
@@ -104,9 +109,41 @@ class AddArticleCount extends StatelessWidget {
                           labelText: 'comment'.tr,
                           border: const OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5)))),
+                                  BorderRadius.all(Radius.circular(20))),
+
+                      ),
                     ),
                   )
+                : const SizedBox.shrink(),
+            article != null
+                ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ValueListenableBuilder(
+                valueListenable: peremption,
+                builder: (context, value, child) {
+                  return DateTimeFormField(
+                      onDateSelected: (date) => peremption.value = date,
+                      dateTextStyle: const TextStyle(color: Colors.black),
+                      initialEntryMode: DatePickerEntryMode.calendar,
+                      initialDate: peremption.value,
+                      dateFormat: DateFormat.yMd(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        labelText: 'peremption'.tr,
+                        prefixIcon: const Icon(
+                          Icons.date_range,
+                          color: Colors.black,
+                        ),
+                      ),
+                      mode: DateTimeFieldPickerMode.date,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: CustomValidator.required);
+                },
+              )
+            )
                 : const SizedBox.shrink(),
             MaterialButton(
               onPressed: onPressed,
@@ -140,6 +177,8 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
   final tabContainerController = TabContainerController(length: 2);
   TextEditingController textController = TextEditingController();
   final ValueNotifier<int> number = ValueNotifier<int>(0);
+  final ValueNotifier<DateTime?> peremption = ValueNotifier<DateTime?>(null);
+
   bool state = false;
   final FocusNode node = FocusNode();
   final tabAnim = const Duration(milliseconds: 500);
@@ -198,6 +237,9 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
     ac.number = number.value;
     ac.zone = zone;
     ac.commentaire = textController.value.text;
+    if (peremption.value != null) {
+      ac.peremption = peremption.value!;
+    }
 
     textController.clear();
     ac = await ArticleCountController().insert(ac, article, zone);
@@ -205,6 +247,7 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
 
     widget.close();
     number.value = 0;
+    peremption.value = null;
   }
 
   ValueNotifier updateBadge = ValueNotifier(false);
@@ -282,6 +325,7 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
                                       codeBar: widget.widgetCode.value,
                                       textController: textController,
                                       article: widget.articleFound.value,
+                                      peremption: peremption,
                                       node: node,
                                     ),
                                     article != null
