@@ -1,11 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bluestock/context/context.dart';
-import 'package:bluestock/database/models/inventory.dart';
-import 'package:bluestock/database/shared_preference_controller.dart';
-import 'package:bluestock/views/helper/bluestock.dart';
-import 'package:bluestock/views/helper/popup.dart';
-import 'package:bluestock/views/inventory_view/inventory_resume.dart';
+import 'package:bluestock/models/models.dart';
+import 'package:bluestock/views/helper_view/bluestock.dart';
+import 'package:bluestock/views/helper_view/popup.dart';
+import 'package:bluestock/views/inventory_view/resume/inventory_resume_view.dart';
 import 'package:bluestock/views/welcome_view/conditons_generale.dart';
 import 'package:bluestock/views/welcome_view/form_view/form_view.dart';
 import 'package:flutter/material.dart';
@@ -53,51 +52,51 @@ class WelcomePage extends StatelessWidget {
                           Inventory inventory =
                               appContext.inventories.reversed.toList()[index];
                           return ListTile(
-                              onTap: () {
-                                if (inventory.done == true) {
-                                  inventoryResumePopup(context, inventory);
-                                  return;
-                                }
-                                appContext.currentInventory.value = inventory;
-                              },
-                              onLongPress: () {
-                                if (inventory.done == true) {
-                                  inventoryResumePopup(context, inventory);
-                                  return;
-                                }
-                                appContext.currentInventory.value = inventory;
-                              },
-                              title: AutoSizeText(
-                                inventory.site.name,
-                                group: autoSizeGroup,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(color: Colors.white),
-                                maxLines: 1,
-                              ),
-                              isThreeLine: false,
-                              trailing: AutoSizeText(
-                                DateFormat.yMd().format(inventory.date),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                              leading: !inventory.done
-                                  ? SizedBox(
-                                      width: 70,
-                                      child: AnimatedTextKit(
-                                        repeatForever: true,
-                                        animatedTexts: [
-                                          FlickerAnimatedText(
-                                            'in_progress'.tr,
-                                            entryEnd: 0.3,
-                                            textStyle: const TextStyle(
-                                              color: Colors.purple,
-                                            ),
+                            onTap: () {
+                              if (inventory.done == true) {
+                                inventoryResumePopup(context, inventory);
+                                return;
+                              }
+                              appContext.currentInventory.value = inventory;
+                            },
+                            onLongPress: () {
+                              if (inventory.done == true) {
+                                inventoryResumePopup(context, inventory);
+                                return;
+                              }
+                              appContext.currentInventory.value = inventory;
+                            },
+                            title: AutoSizeText(
+                              inventory.site.name,
+                              group: autoSizeGroup,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.white),
+                              maxLines: 1,
+                            ),
+                            isThreeLine: false,
+                            trailing: AutoSizeText(
+                              DateFormat('dd-MM-yyyy').format(inventory.date),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            leading: !inventory.done
+                                ? SizedBox(
+                                    width: 70,
+                                    child: AnimatedTextKit(
+                                      repeatForever: true,
+                                      animatedTexts: [
+                                        FlickerAnimatedText(
+                                          'in_progress'.tr,
+                                          entryEnd: 0.3,
+                                          textStyle: const TextStyle(
+                                            color: Colors.purple,
                                           ),
-                                        ],
-                                      ),
-                                    )
-                                  : const SizedBox(
-                                      width: 70,
+                                        ),
+                                      ],
                                     ),
+                                  )
+                                : const SizedBox(
+                                    width: 70,
+                                  ),
                           );
                         }),
                   );
@@ -120,7 +119,10 @@ class WelcomePage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.white),
               ),
-              leading: IconButton(
+              leading: const Icon(
+                Icons.language_outlined,
+                color: Colors.transparent,
+              ) /*IconButton(
                 icon: const Icon(
                   Icons.language_outlined,
                   color: Colors.white70,
@@ -140,7 +142,8 @@ class WelcomePage extends StatelessWidget {
                     Get.updateLocale(l);
                   });
                 },
-              ),
+              )*/
+              ,
               trailing: IconButton(
                   icon: const Icon(Icons.help),
                   color: Colors.white70,

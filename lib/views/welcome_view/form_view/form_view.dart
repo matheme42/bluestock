@@ -1,12 +1,8 @@
 import 'package:bluestock/context/context.dart';
-import 'package:bluestock/database/inventory_controller.dart';
-import 'package:bluestock/database/models/inventory.dart';
-import 'package:bluestock/database/models/site.dart';
-import 'package:bluestock/database/models/zone.dart';
-import 'package:bluestock/database/site_controller.dart';
-import 'package:bluestock/database/zone_controller.dart';
-import 'package:bluestock/views/helper/inventaire_new.dart';
-import 'package:bluestock/views/helper/popup.dart';
+import 'package:bluestock/controllers/controllers.dart';
+import 'package:bluestock/models/models.dart';
+import 'package:bluestock/views/helper_view/form.dart';
+import 'package:bluestock/views/helper_view/popup.dart';
 import 'package:bluestock/views/welcome_view/form_view/form_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
@@ -56,11 +52,10 @@ class NewInventoryForm extends StatelessWidget {
     }
     inventory.site = newSite;
     // ignore: use_build_context_synchronously
-    inventory.importArticle(BluestockContext.of(context).articleStrings);
-    // ignore: use_build_context_synchronously
-    BluestockContext.of(context).inventories.add(inventory);
-    // ignore: use_build_context_synchronously
-    BluestockContext.of(context).currentInventory.value = inventory;
+    BluestockContext appContext = BluestockContext.of(context);
+    inventory.importArticle(appContext.articleStrings);
+    appContext.inventories.add(inventory);
+    appContext.currentInventory.value = inventory;
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
   }

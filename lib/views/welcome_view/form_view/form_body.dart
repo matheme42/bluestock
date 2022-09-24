@@ -1,8 +1,8 @@
-import 'package:bluestock/database/models/inventory.dart';
-import 'package:bluestock/views/welcome_view/form_view/articles_field.dart';
-import 'package:bluestock/views/welcome_view/form_view/date_field.dart';
-import 'package:bluestock/views/welcome_view/form_view/process_field.dart';
-import 'package:bluestock/views/welcome_view/form_view/storage_zone_field.dart';
+import 'package:bluestock/models/models.dart';
+import 'package:bluestock/views/welcome_view/form_view/field/articles_field.dart';
+import 'package:bluestock/views/welcome_view/form_view/field/date_field.dart';
+import 'package:bluestock/views/welcome_view/form_view/field/process_field.dart';
+import 'package:bluestock/views/welcome_view/form_view/field/storage_zone_field.dart';
 import 'package:flutter/material.dart';
 
 class FormBody extends StatelessWidget {

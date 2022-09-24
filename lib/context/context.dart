@@ -1,12 +1,9 @@
-import 'package:bluestock/database/models/inventory.dart';
-import 'package:bluestock/database/models/site.dart';
-import 'package:bluestock/database/models/zone.dart';
+import 'package:bluestock/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 
 class BluestockContext with ChangeNotifier {
-
   static const csvDelimitor = ';';
 
   ValueNotifier<bool> updater = ValueNotifier(false);
@@ -14,6 +11,7 @@ class BluestockContext with ChangeNotifier {
   ValueNotifier<bool> appLoaded = ValueNotifier(false);
   ValueNotifier<bool> cguAccepted = ValueNotifier(false);
   bool cguAlreadyAccepted = false;
+  ValueNotifier<bool> cameraFocus = ValueNotifier(true);
   ValueNotifier<int> siteLoaded = ValueNotifier(0);
   ValueNotifier<int> processLoaded = ValueNotifier(0);
 

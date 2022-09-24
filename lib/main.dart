@@ -1,14 +1,15 @@
 import 'package:bluestock/context/context.dart';
-import 'package:bluestock/custom_widget/root/root.dart';
-import 'package:bluestock/dart/loading.dart';
-import 'package:bluestock/database/shared_preference_controller.dart';
-import 'package:bluestock/views/inventory_view/inventory_view.dart';
+import 'package:bluestock/functions/loading.dart';
+import 'package:bluestock/shared_preferences/shared_preference_controller.dart';
+import 'package:bluestock/views/scaffold_view/home.dart';
+import 'package:bluestock/widgets/root/root.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 /// entry point du programme
-Future <void> main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   /// on recupere le language de depart de l'application
   var appContext = BluestockContext();
   appContext.language = await SharedPreferenceController.getLanguage();
@@ -26,6 +27,6 @@ Future <void> main() async {
     appContext: appContext,
     initialRoute: '/',
     debugShowCheckedModeBanner: false,
-    routes: {'/': (context) => Home()},
+    routes: {'/': (context) => const Home()},
   ).run();
 }

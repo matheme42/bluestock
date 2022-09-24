@@ -1,10 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bluestock/context/context.dart';
-import 'package:bluestock/custom_widget/easy_search_bar/easy_search_bar.dart';
-import 'package:bluestock/database/models/article.dart';
-import 'package:bluestock/database/models/zone.dart';
+import 'package:bluestock/models/models.dart';
+import 'package:bluestock/shared_preferences/shared_preference_controller.dart';
+import 'package:bluestock/widgets/easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CodeScannerAppBar {
   static final GlobalKey<EasySearchBarState> _easySearchBarKey = GlobalKey();
@@ -41,9 +42,10 @@ class CodeScannerAppBar {
         suggestions.add("${elm.commercialDenomination};${elm.codeProduct}");
       }
       if (suggestions.length >= 40) {
-        return suggestions;
+        break;
       }
     }
+    suggestions.sort((a, b) => a.compareTo(b));
     return suggestions;
   }
 
@@ -68,23 +70,28 @@ class CodeScannerAppBar {
       onStateChange: (state) {
         if (state == false) {
           onSearchClose != null ? onSearchClose() : 0;
+        } else {
+          onSearchOpen != null ? onSearchOpen() : 0;
         }
       },
       searchTextStyle: const TextStyle(color: Colors.white),
       onSearch: (value) {},
       suggestionLoaderBuilder: () => const SizedBox.shrink(),
+      suggestionBackgroundColor: Colors.transparent,
       suggestionBuilder: (string) {
         List data = string.split(';');
-        return ListTile(
-          trailing: AutoSizeText(
-            data[1],
-            minFontSize: 5,
-            maxLines: 1,
-          ),
-          title: AutoSizeText(
-            data[0],
-            minFontSize: 5,
-            maxLines: 2,
+        return Card(
+          child: ListTile(
+            trailing: AutoSizeText(
+              data[1],
+              minFontSize: 5,
+              maxLines: 1,
+            ),
+            title: AutoSizeText(
+              data[0],
+              minFontSize: 5,
+              maxLines: 2,
+            ),
           ),
         );
       },
@@ -107,6 +114,25 @@ class CodeScannerAppBar {
           ),
           iconSize: 32.0,
           onPressed: () => appContext.scannerController.toggleTorch(),
+        ),
+        IconButton(
+          color: Colors.white,
+          icon: ValueListenableBuilder<bool>(
+            valueListenable: appContext.cameraFocus,
+            builder: (context, value, child) {
+              if (value == false) {
+                return const Icon(Icons.fullscreen, color: Colors.white);
+              }
+              return const Icon(Icons.center_focus_weak_sharp, color: Colors.white);
+            },
+          ),
+          iconSize: 32.0,
+          onPressed: () {
+            bool val = !appContext.cameraFocus.value;
+            SharedPreferenceController.setCameraFocus(val).then((value) {
+              appContext.cameraFocus.value = val;
+            });
+          }
         ),
         IconButton(
           color: Colors.white,

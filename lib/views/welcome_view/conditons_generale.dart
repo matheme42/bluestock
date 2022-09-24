@@ -1,5 +1,5 @@
 import 'package:bluestock/context/context.dart';
-import 'package:bluestock/database/shared_preference_controller.dart';
+import 'package:bluestock/shared_preferences/shared_preference_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
