@@ -11,13 +11,20 @@ import 'package:tab_container/tab_container.dart';
 class ScannerBottomBar extends StatefulWidget {
   final ValueNotifier<Article?> articleFound;
   final ValueNotifier<Widget?> widgetCode;
+  final ValueNotifier<int> number;
+
   final Function close;
+  final Function open;
+  final Function softClose;
 
   const ScannerBottomBar({
     Key? key,
     required this.widgetCode,
     required this.close,
     required this.articleFound,
+    required this.open,
+    required this.softClose,
+    required this.number,
   }) : super(key: key);
 
   @override
@@ -28,7 +35,6 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
   final sheetController = DraggableScrollableController();
   final tabContainerController = TabContainerController(length: 2);
   TextEditingController textController = TextEditingController();
-  final ValueNotifier<int> number = ValueNotifier<int>(0);
   final ValueNotifier<DateTime?> peremption = ValueNotifier<DateTime?>(null);
 
   bool state = false;
@@ -40,6 +46,7 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
     state = true;
     sheetController.animateTo(0.7, duration: tabAnim, curve: Curves.linear);
     BluestockContext.of(context).scannerController.stop();
+    widget.open();
   }
 
   void close() {
@@ -47,9 +54,7 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
     textController.clear();
     state = false;
     sheetController.animateTo(0.1, duration: tabAnim, curve: Curves.linear);
-    if (BluestockContext.of(context).previousZone == null) {
-      BluestockContext.of(context).scannerController.start();
-    }
+    widget.softClose();
   }
 
   void jumpTo(int index) => tabContainerController.jumpTo(index);
@@ -71,9 +76,16 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
   void sheetControllerMove() {
     if (sheetController.size == 0.7) {
       showCountList.value = true;
-    } else {
-      showCountList.value = false;
+      return ;
     }
+    if (sheetController.size == 0.1){
+      if (BluestockContext.of(context).previousZone == null) {
+        BluestockContext.of(context).scannerController.start();
+      }
+      return ;
+    }
+    showCountList.value = false;
+    widget.number.value = 0;
   }
 
   void onchange() {
@@ -88,7 +100,7 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
   Future<void> addArticleCount(Article? article) async {
     if (article == null) {
       widget.close();
-      number.value = 0;
+      widget.number.value = 0;
       return;
     }
 
@@ -96,7 +108,7 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
 
     ArticleCount ac = ArticleCount();
     ac.article = article;
-    ac.number = number.value;
+    ac.number = widget.number.value;
     ac.zone = zone;
     ac.commentaire = textController.value.text;
     if (peremption.value != null) {
@@ -108,7 +120,7 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
     zone.articlesCount.add(ac);
 
     widget.close();
-    number.value = 0;
+    widget.number.value = 0;
     peremption.value = null;
   }
 
@@ -184,7 +196,7 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
                             children: [
                               AddArticleCount(
                                 onPressed: () => addArticleCount(article),
-                                number: number,
+                                number: widget.number,
                                 codeBar: widget.widgetCode.value,
                                 textController: textController,
                                 article: widget.articleFound.value,

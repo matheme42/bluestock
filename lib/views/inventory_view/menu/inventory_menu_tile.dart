@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:badges/badges.dart';
 import 'package:bluestock/context/context.dart';
 import 'package:bluestock/controllers/zone_controller.dart';
 import 'package:bluestock/models/models.dart';

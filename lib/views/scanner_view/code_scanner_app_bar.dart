@@ -1,11 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bluestock/context/context.dart';
 import 'package:bluestock/models/models.dart';
-import 'package:bluestock/shared_preferences/shared_preference_controller.dart';
 import 'package:bluestock/widgets/easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CodeScannerAppBar {
   static final GlobalKey<EasySearchBarState> _easySearchBarKey = GlobalKey();
@@ -100,52 +97,6 @@ class CodeScannerAppBar {
           await _getSuggestion(search, articles),
       iconTheme: const IconThemeData(color: Colors.white),
       searchBackIconTheme: const IconThemeData(color: Colors.white),
-      actions: [
-        IconButton(
-          color: Colors.white,
-          icon: ValueListenableBuilder<TorchState>(
-            valueListenable: appContext.scannerController.torchState,
-            builder: (context, state, child) {
-              if (state == TorchState.off) {
-                return const Icon(Icons.flash_off, color: Colors.grey);
-              }
-              return const Icon(Icons.flash_on, color: Colors.yellow);
-            },
-          ),
-          iconSize: 32.0,
-          onPressed: () => appContext.scannerController.toggleTorch(),
-        ),
-        IconButton(
-          color: Colors.white,
-          icon: ValueListenableBuilder<bool>(
-            valueListenable: appContext.cameraFocus,
-            builder: (context, value, child) {
-              if (value == false) {
-                return const Icon(Icons.fullscreen, color: Colors.white);
-              }
-              return const Icon(Icons.center_focus_weak_sharp, color: Colors.white);
-            },
-          ),
-          iconSize: 32.0,
-          onPressed: () {
-            bool val = !appContext.cameraFocus.value;
-            SharedPreferenceController.setCameraFocus(val).then((value) {
-              appContext.cameraFocus.value = val;
-            });
-          }
-        ),
-        IconButton(
-          color: Colors.white,
-          icon: ValueListenableBuilder(
-            valueListenable: appContext.scannerController.cameraFacingState,
-            builder: (context, state, child) {
-              return const Icon(Icons.cameraswitch);
-            },
-          ),
-          iconSize: 32.0,
-          onPressed: () => appContext.scannerController.switchCamera(),
-        ),
-      ],
       leading: ValueListenableBuilder<Zone?>(
           valueListenable: appContext.currentZone,
           child: IconButton(

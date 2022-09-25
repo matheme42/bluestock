@@ -5,6 +5,7 @@ import 'package:bluestock/context/context.dart';
 import 'package:bluestock/controllers/controllers.dart';
 import 'package:bluestock/models/models.dart';
 import 'package:bluestock/views/inventory_view/resume/articles_tile.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:get/get.dart';
@@ -58,7 +59,6 @@ class InventoryResumeState extends State<InventoryResume> {
   @override
   Widget build(BuildContext context) {
     Inventory inventory = widget.inventory;
-    ValueNotifier<bool> delete = ValueNotifier(false);
 
     for (var zone in inventory.site.zones) {
       tArticleScan += zone.articlesCount.length;
@@ -70,200 +70,161 @@ class InventoryResumeState extends State<InventoryResume> {
       }
     }
 
-    return ValueListenableBuilder<bool>(
-        valueListenable: delete,
-        builder: (context, value, _) {
-          return Scaffold(
-              backgroundColor: const Color(0xFF112473),
-              appBar: AppBar(
-                centerTitle: true,
-                backgroundColor: Colors.transparent,
-                title: Text(inventory.site.name.toUpperCase(),
-                    style: const TextStyle(color: Colors.white)),
-                actions: widget.inventory.done == true
-                    ? [
-                        Center(
-                            child: delete.value == false
-                                ? IconButton(
-                                    icon: const Icon(
-                                      Icons.more_horiz,
-                                      color: Colors.white70,
-                                    ),
-                                    onPressed: () {
-                                      delete.value = true;
-                                    },
-                                  )
-                                : IconButton(
-                                    onPressed: () {
-                                      delete.value = false;
-                                    },
-                                    icon: const Icon(Icons.undo))),
-                      ]
-                    : null,
-              ),
-              body: Container(
-                  margin: const EdgeInsets.all(8),
-                  child: InventoryResumeList(
-                      inventory: widget.inventory, removeAc: removeItem)),
-              bottomNavigationBar: widget.inventory.done == true
-                  ? delete.value == false
-                      ? Card(
-                          color: Colors.deepPurple,
-                          elevation: 3,
-                          child: ListTile(
+    return Scaffold(
+        backgroundColor: const Color(0xFF112473),
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          title: Text(inventory.site.name.toUpperCase(),
+              style: const TextStyle(color: Colors.white)),
+          actions: widget.inventory.done == true
+              ? [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                        customButton: const Icon(
+                          Icons.more_horiz,
+                          color: Colors.white,
+                        ),
+                        items: [
+                          DropdownMenuItem<String>(
+                            value: 'reprendre',
                             onTap: () {
-                              export().then((value) {
+                              var appContext = BluestockContext.of(context);
+                              inventory.done = false;
+                              InventoryController().update(inventory).then((_) {
+                                appContext.currentInventory.value = inventory;
                                 Navigator.pop(context);
                               });
                             },
-                            onLongPress: () {
-                              export().then((value) {
-                                Navigator.pop(context);
-                              });
-                            },
-                            title: const Icon(
-                              Icons.upload,
-                              color: Colors.white,
-                            ),
-                            subtitle: Text(
-                              'export'.tr,
+                            child: const Text(
+                              'reprendre',
                               textAlign: TextAlign.center,
-                              style: const TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.white),
                             ),
-                            visualDensity: const VisualDensity(vertical: -4),
                           ),
-                        )
-                      : Row(
-                          children: [
-                            Flexible(
-                              flex: 2,
-                              child: Card(
-                                color: Colors.deepPurple,
-                                child: ListTile(
-                                  onLongPress: () {
-                                    var appContext =
-                                        BluestockContext.of(context);
-                                    inventory.done = false;
-                                    InventoryController()
-                                        .update(inventory)
-                                        .then((_) {
-                                      appContext.currentInventory.value =
-                                          inventory;
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                  onTap: () {
-                                    var appContext =
-                                        BluestockContext.of(context);
-                                    inventory.done = false;
-                                    InventoryController()
-                                        .update(inventory)
-                                        .then((_) {
-                                      appContext.currentInventory.value =
-                                          inventory;
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                  title: AutoSizeText(
-                                    'edit'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(color: Colors.white),
-                                    maxLines: 1,
-                                  ),
-                                  visualDensity:
-                                      const VisualDensity(vertical: 0),
-                                ),
-                              ),
+                          DropdownMenuItem<String>(
+                            onTap: () {
+                              InventoryController()
+                                  .destroy(inventory)
+                                  .then((_) {
+                                var appContext = BluestockContext.of(context);
+                                appContext.inventories.remove(inventory);
+                                appContext.updater.value =
+                                    !appContext.updater.value;
+                                Navigator.pop(context);
+                              });
+                            },
+                            value: 'supprimer',
+                            child: const Text(
+                              'supprimer',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.red),
                             ),
-                            Flexible(
-                              child: Card(
-                                color: Colors.red,
-                                child: ListTile(
-                                  onLongPress: () {
-                                    InventoryController()
-                                        .destroy(inventory)
-                                        .then((_) {
-                                      var appContext =
-                                          BluestockContext.of(context);
-                                      appContext.inventories.remove(inventory);
-                                      appContext.updater.value =
-                                          !appContext.updater.value;
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                  onTap: () {
-                                    InventoryController()
-                                        .destroy(inventory)
-                                        .then((_) {
-                                      var appContext =
-                                          BluestockContext.of(context);
-                                      appContext.inventories.remove(inventory);
-                                      appContext.updater.value =
-                                          !appContext.updater.value;
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                  title: AutoSizeText(
-                                    'remove'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(color: Colors.white),
-                                    maxLines: 1,
-                                  ),
-                                  visualDensity:
-                                      const VisualDensity(vertical: 0),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                  : Card(
-                      color: Colors.transparent,
-                      child: ValueListenableBuilder(
-                        builder: (context, value, _) {
-                          return ListTile(
-                              leading: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.discount,
-                                        color: Colors.white),
-                                    AutoSizeText(
-                                      '$tAcScan',
-                                      minFontSize: 5,
-                                      maxLines: 1,
-                                      textAlign: TextAlign.center,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              title: AutoSizeText(
-                                '$tArticleScan articles scanné(s)',
+                          ),
+                        ],
+                        onChanged: (_) {},
+                        itemHeight: 48,
+                        itemPadding: const EdgeInsets.only(left: 16, right: 16),
+                        dropdownWidth: 160,
+                        dropdownPadding:
+                            const EdgeInsets.symmetric(vertical: 6),
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: const Color(0xFF112473),
+                        ),
+                        dropdownElevation: 8,
+                        offset: const Offset(0, 8),
+                      ),
+                    ),
+                  ),
+                ]
+              : null,
+        ),
+        body: Container(
+            margin: const EdgeInsets.all(8),
+            child: FutureBuilder(
+              future: Future.delayed(const Duration(seconds: 1)),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const SizedBox.shrink();
+                }
+               return InventoryResumeList(inventory: widget.inventory, removeAc: removeItem);
+              },
+            )),
+        bottomNavigationBar: widget.inventory.done == true
+            ? Card(
+                color: Colors.deepPurple,
+                elevation: 3,
+                child: ListTile(
+                  onTap: () {
+                    export().then((value) {
+                      Navigator.pop(context);
+                    });
+                  },
+                  onLongPress: () {
+                    export().then((value) {
+                      Navigator.pop(context);
+                    });
+                  },
+                  title: const Icon(
+                    Icons.upload,
+                    color: Colors.white,
+                  ),
+                  subtitle: Text(
+                    'export'.tr,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  visualDensity: const VisualDensity(vertical: -4),
+                ),
+              )
+            : Card(
+                color: Colors.transparent,
+                child: ValueListenableBuilder(
+                  builder: (context, value, _) {
+                    return ListTile(
+                        leading: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.discount, color: Colors.white),
+                              AutoSizeText(
+                                '$tAcScan',
                                 minFontSize: 5,
                                 maxLines: 1,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(color: Colors.white),
                               ),
-                              trailing: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.done, color: Colors.white),
-                                  AutoSizeText(
-                                    '$nbZoneLock / ${inventory.site.zones.length}',
-                                    minFontSize: 5,
-                                    maxLines: 1,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                ],
-                              ));
-                        },
-                        valueListenable: updateBottomBar,
-                      ),
-                    ));
-        });
+                            ],
+                          ),
+                        ),
+                        title: AutoSizeText(
+                          '$tArticleScan articles scanné(s)',
+                          minFontSize: 5,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.done, color: Colors.white),
+                            AutoSizeText(
+                              '$nbZoneLock / ${inventory.site.zones.length}',
+                              minFontSize: 5,
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ));
+                  },
+                  valueListenable: updateBottomBar,
+                ),
+              ));
   }
 }
 
