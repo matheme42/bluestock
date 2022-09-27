@@ -17,6 +17,8 @@ class BluestockContext with ChangeNotifier {
 
   Locale language = const Locale('FR', 'fr');
 
+  String imeiNo = '';
+
   List<String> process = [];
   List<String> siteNames = [];
   List<Site> sites = [];

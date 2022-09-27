@@ -39,11 +39,10 @@ class ArticleTile extends StatelessWidget {
       height: 50,
       margin: const EdgeInsets.only(bottom: 5),
       child: ListTile(
-        title: const Text('commentaire',
-            style: TextStyle(color: Colors.grey)),
+        title: const Text('commentaire', style: TextStyle(color: Colors.grey)),
         dense: true,
-        subtitle: Text(ac.commentaire,
-            style: const TextStyle(color: Colors.white)),
+        subtitle:
+            Text(ac.commentaire, style: const TextStyle(color: Colors.white)),
       ),
     ));
 
@@ -51,10 +50,12 @@ class ArticleTile extends StatelessWidget {
       height: 50,
       margin: const EdgeInsets.only(bottom: 5),
       child: ListTile(
-        title: const Text('peremption',
-            style: TextStyle(color: Colors.grey)),
+        title: const Text('peremption', style: TextStyle(color: Colors.grey)),
         dense: true,
-        subtitle: Text(ac.peremption != null ? DateFormat('dd-MM-yyyy').format(ac.peremption!) : '',
+        subtitle: Text(
+            ac.peremption != null
+                ? DateFormat('dd-MM-yyyy').format(ac.peremption!)
+                : '',
             style: const TextStyle(color: Colors.white)),
       ),
     ));

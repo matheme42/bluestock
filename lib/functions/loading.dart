@@ -2,6 +2,7 @@ import 'package:bluestock/context/context.dart';
 import 'package:bluestock/controllers/controllers.dart';
 import 'package:bluestock/models/models.dart';
 import 'package:bluestock/shared_preferences/shared_preference_controller.dart';
+import 'package:device_information/device_information.dart';
 import 'package:flutter/services.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -53,6 +54,12 @@ class Loading {
         await SharedPreferenceController.getArticlesDate();
   }
 
+  static Future<void> _getImei(BluestockContext appContext) async {
+    try {
+      appContext.imeiNo = await DeviceInformation.deviceIMEINumber;
+    } catch (_) {}
+  }
+
   /// Permet de charger les configuration de base de l'application
   /// SharedPreference & Sqlite
   static Future<void> loading(BluestockContext appContext) async {
@@ -66,5 +73,7 @@ class Loading {
     await _getSite(appContext);
     // ignore: use_build_context_synchronously
     await _getInventory(appContext);
+    // ignore: use_build_context_synchronously
+    await _getImei(appContext);
   }
 }

@@ -76,13 +76,13 @@ class ScannerBottomBarState extends State<ScannerBottomBar> {
   void sheetControllerMove() {
     if (sheetController.size == 0.7) {
       showCountList.value = true;
-      return ;
+      return;
     }
-    if (sheetController.size == 0.1){
+    if (sheetController.size == 0.1) {
       if (BluestockContext.of(context).previousZone == null) {
         BluestockContext.of(context).scannerController.start();
       }
-      return ;
+      return;
     }
     showCountList.value = false;
     widget.number.value = 0;

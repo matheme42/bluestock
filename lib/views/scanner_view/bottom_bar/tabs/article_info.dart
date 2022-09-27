@@ -27,17 +27,15 @@ class ArticleInfo extends StatelessWidget {
                   child: ListTile(
                     title: Row(
                       children: [
-                        const Expanded(child: Divider(color: Colors.black38)),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(key),
                         ),
-                        const Expanded(child: Divider(color: Colors.black38)),
                       ],
                     ),
                     subtitle: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(value, textAlign: TextAlign.center),
+                      child: Text(value),
                     ),
                   ),
                 ),

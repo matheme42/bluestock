@@ -17,38 +17,48 @@ class ArticleNumberPicker extends StatelessWidget {
         return Column(
           children: [
             const Spacer(
-              flex: 10,
+              flex: 13,
             ),
             Flexible(
               flex: 30,
-              child: SimpleCalculator(
-                onChanged: (String? a, double? b, String? c) {
-                  if (a == '=') {
-                    currentValue.value = b?.ceil() ?? 0;
-                    Navigator.of(context).pop();
-                  }
-                },
-                theme: CalculatorThemeData(
-                  displayColor: Colors.black,
-                  commandColor: Colors.deepPurple,
-                  expressionColor: Colors.blueAccent,
-                  expressionStyle: const TextStyle(color: Colors.white),
-                  commandStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30),
-                  numColor: Colors.white.withAlpha(200),
-                  operatorColor: const Color(0xFF112473),
-                  operatorStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30),
-                  numStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30),
-                  displayStyle:
-                      const TextStyle(fontSize: 80, color: Colors.yellow),
+              child: Container(
+                color: Colors.white,
+                child: SimpleCalculator(
+                  hideSurroundingBorder: true,
+                  onChanged: (String? a, double? b, String? c) {
+                    if (a == '=' && b != null) {
+                      if (b.ceil() < 0) {
+                        b = 0;
+                      }
+                      currentValue.value = b.ceil();
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  theme: const CalculatorThemeData(
+                      displayColor: Colors.white,
+                      commandColor: Colors.deepPurpleAccent,
+                      expressionColor: Colors.black12,
+                      borderWidth: 0,
+                      borderColor: Colors.transparent,
+                      expressionStyle: TextStyle(color: Colors.black54),
+                      commandStyle: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                      numColor: Colors.white,
+                      operatorColor: Color(0xFF5568B7),
+                      operatorStyle: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                      numStyle: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                      displayStyle: TextStyle(
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 50)),
                 ),
               ),
             ),
@@ -78,7 +88,7 @@ class ArticleNumberPicker extends StatelessWidget {
                   itemCount: 3,
                   itemWidth: 100,
                   haptics: true,
-                  maxValue: 1000000000,
+                  maxValue: 999999,
                   onChanged: (value) => currentValue.value = value,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),

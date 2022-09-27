@@ -22,8 +22,9 @@ class InventoryMenuTile extends StatelessWidget {
           iconColor: Colors.white,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          tileColor: zone.lock.value ? Colors.green : Colors.black26,
-          selectedTileColor: zone.lock.value ? Colors.green : Colors.deepPurple,
+          tileColor: Colors.black26,
+          selectedTileColor:
+              zone.lock.value ? Colors.black26 : Colors.deepPurple,
           selectedColor: Colors.white,
           enabled: true,
           trailing: AutoSizeText(

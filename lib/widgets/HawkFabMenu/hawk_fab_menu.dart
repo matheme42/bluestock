@@ -1,12 +1,14 @@
 library hawk_fab_menu;
 
-import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+
+import 'package:flutter/material.dart';
 
 /// Used to toggle the menu from other than the dedicated button.
 class HawkFabMenuController {
   late Function toggleMenu;
   late Function isOpen;
+
   HawkFabMenuController();
 }
 

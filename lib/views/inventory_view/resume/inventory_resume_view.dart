@@ -8,10 +8,12 @@ import 'package:bluestock/views/inventory_view/resume/articles_tile.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 void inventoryResumePopup(BuildContext context, Inventory inventory) {
   showAnimatedDialog(
@@ -39,7 +41,8 @@ class InventoryResume extends StatefulWidget {
 
 class InventoryResumeState extends State<InventoryResume> {
   Future<void> export() async {
-    File file = await widget.inventory.generateCsv();
+    File file =
+        await widget.inventory.generateCsv(BluestockContext.of(context).imeiNo);
     final date = DateFormat('dd-MM-yyyy').format(widget.inventory.date);
     final name = widget.inventory.site.name;
     await Share.shareFiles([file.path], text: '$name $date');
@@ -49,6 +52,7 @@ class InventoryResumeState extends State<InventoryResume> {
   int tAcScan = 0;
   int nbZoneLock = 0;
   ValueNotifier<bool> updateBottomBar = ValueNotifier(false);
+  ValueNotifier<bool> delete = ValueNotifier(false);
 
   void removeItem(ArticleCount ac) {
     tArticleScan -= 1;
@@ -83,11 +87,25 @@ class InventoryResumeState extends State<InventoryResume> {
                     padding: const EdgeInsets.all(8.0),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton2(
-                        customButton: const Icon(
-                          Icons.more_horiz,
-                          color: Colors.white,
+                        customButton: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.more_horiz,
+                            color: Colors.white,
+                          ),
                         ),
                         items: [
+                          DropdownMenuItem<String>(
+                            onTap: () {
+                              export();
+                            },
+                            value: 'exporter',
+                            child: const Text(
+                              'exporter',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
                           DropdownMenuItem<String>(
                             value: 'reprendre',
                             onTap: () {
@@ -105,22 +123,45 @@ class InventoryResumeState extends State<InventoryResume> {
                             ),
                           ),
                           DropdownMenuItem<String>(
+                            enabled: true,
                             onTap: () {
-                              InventoryController()
-                                  .destroy(inventory)
-                                  .then((_) {
-                                var appContext = BluestockContext.of(context);
-                                appContext.inventories.remove(inventory);
-                                appContext.updater.value =
-                                    !appContext.updater.value;
-                                Navigator.pop(context);
-                              });
+                              if (delete.value == true) {
+                                InventoryController()
+                                    .destroy(inventory)
+                                    .then((_) {
+                                  var appContext = BluestockContext.of(context);
+                                  appContext.inventories.remove(inventory);
+                                  appContext.updater.value =
+                                      !appContext.updater.value;
+                                  Navigator.pop(context);
+                                  ScaffoldMessenger.of(context)
+                                      .clearSnackBars();
+                                });
+                              }
+                              if (delete.value == false) {
+                                delete.value = true;
+                                showTopSnackBar(
+                                    context,
+                                    CustomSnackBar.error(
+                                      maxLines: 10,
+                                      textScaleFactor: 0.9,
+                                      message:
+                                          "Vous etes sur le point de supprimer l'inventaire de ${widget.inventory.site.name} datant du ${DateFormat('dd-MM-yyyy').format(widget.inventory.date)}.\nRecliquer sur le bouton pour confirmer",
+                                    ),
+                                    displayDuration:
+                                        const Duration(seconds: 10));
+                              }
                             },
                             value: 'supprimer',
-                            child: const Text(
-                              'supprimer',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.red),
+                            child: ValueListenableBuilder(
+                              builder: (context, value, child) {
+                                return Text(
+                                  value == false ? 'supprimer' : 'confirmer',
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(color: Colors.red),
+                                );
+                              },
+                              valueListenable: delete,
                             ),
                           ),
                         ],
@@ -142,89 +183,66 @@ class InventoryResumeState extends State<InventoryResume> {
                 ]
               : null,
         ),
-        body: Container(
-            margin: const EdgeInsets.all(8),
-            child: FutureBuilder(
-              future: Future.delayed(const Duration(seconds: 1)),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
-                  return const SizedBox.shrink();
-                }
-               return InventoryResumeList(inventory: widget.inventory, removeAc: removeItem);
-              },
-            )),
-        bottomNavigationBar: widget.inventory.done == true
-            ? Card(
-                color: Colors.deepPurple,
-                elevation: 3,
-                child: ListTile(
-                  onTap: () {
-                    export().then((value) {
-                      Navigator.pop(context);
-                    });
-                  },
-                  onLongPress: () {
-                    export().then((value) {
-                      Navigator.pop(context);
-                    });
-                  },
-                  title: const Icon(
-                    Icons.upload,
-                    color: Colors.white,
-                  ),
-                  subtitle: Text(
-                    'export'.tr,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  visualDensity: const VisualDensity(vertical: -4),
-                ),
-              )
-            : Card(
-                color: Colors.transparent,
-                child: ValueListenableBuilder(
-                  builder: (context, value, _) {
-                    return ListTile(
-                        leading: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.discount, color: Colors.white),
-                              AutoSizeText(
-                                '$tAcScan',
-                                minFontSize: 5,
-                                maxLines: 1,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                        title: AutoSizeText(
-                          '$tArticleScan articles scanné(s)',
+        body: FutureBuilder(
+          future: Future.delayed(const Duration(seconds: 1)),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return Shimmer.fromColors(
+                  baseColor: const Color(0xFF112473),
+                  highlightColor: const Color(0xFF223584),
+                  child: Container(
+                    color: const Color(0xFF112473),
+                  ));
+            }
+            return InventoryResumeList(
+                inventory: widget.inventory, removeAc: removeItem);
+          },
+        ),
+        bottomNavigationBar: Card(
+          color: Colors.transparent,
+          child: ValueListenableBuilder(
+            builder: (context, value, _) {
+              return ListTile(
+                  leading: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.discount, color: Colors.white),
+                        AutoSizeText(
+                          '$tAcScan',
                           minFontSize: 5,
                           maxLines: 1,
                           textAlign: TextAlign.center,
                           style: const TextStyle(color: Colors.white),
                         ),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.done, color: Colors.white),
-                            AutoSizeText(
-                              '$nbZoneLock / ${inventory.site.zones.length}',
-                              minFontSize: 5,
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ));
-                  },
-                  valueListenable: updateBottomBar,
-                ),
-              ));
+                      ],
+                    ),
+                  ),
+                  title: AutoSizeText(
+                    '$tArticleScan articles scanné(s)',
+                    minFontSize: 5,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.done, color: Colors.white),
+                      AutoSizeText(
+                        '$nbZoneLock / ${inventory.site.zones.length}',
+                        minFontSize: 5,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ));
+            },
+            valueListenable: updateBottomBar,
+          ),
+        ));
   }
 }
 

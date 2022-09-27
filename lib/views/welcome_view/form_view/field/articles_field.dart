@@ -56,7 +56,8 @@ class ArticlesField extends StatelessWidget {
                   builder: (context, value, _) {
                     return MaterialButton(
                         onPressed: () => Import.articlesCsv(context, inventory),
-                        child: Text('update'.tr,
+                        child: Text(
+                          'update'.tr,
                           style: const TextStyle(color: Colors.white38),
                         ));
                   },

@@ -1,9 +1,13 @@
 import 'package:bluestock/context/context.dart';
 import 'package:bluestock/models/models.dart';
 import 'package:bluestock/views/inventory_view/inventory_view.dart';
+import 'package:bluestock/views/scanner_view/code_scanner_view.dart';
 import 'package:bluestock/views/welcome_view/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
+
+final GlobalKey<BarcodeScannerState> barCodeScannerKey =
+    GlobalKey<BarcodeScannerState>();
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -45,6 +49,16 @@ class Home extends StatelessWidget {
       ),
       child: WillPopScope(
         onWillPop: () async {
+          if (barCodeScannerKey.currentState != null) {
+            if (barCodeScannerKey.currentState!.articleFound.value != null ||
+                barCodeScannerKey.currentState!.scannerBottomBarKey
+                        .currentState!.tabContainerController.index ==
+                    1) {
+              barCodeScannerKey.currentState!.clean();
+              return false;
+            }
+          }
+
           if (appContext.currentZone.value != null) {
             appContext.previousZone = appContext.currentZone.value;
             BluestockContext.of(context).scannerController.stop();

@@ -29,23 +29,27 @@ class AddArticleCount extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => node.unfocus(),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                    alignment: Alignment.center,
-                    child: codeBar ?? const SizedBox.shrink()),
-              ),
-              article != null
-                  ? ArticleNumberPicker(currentValue: number)
-                  : const SizedBox.shrink(),
-              article != null
-                  ? Padding(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: article != null
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Align(
+                          alignment: Alignment.topCenter,
+                          child: codeBar ?? const SizedBox.shrink()),
+                    ),
+                    article!.countingUnit != '' || article!.referenceUnit != ''
+                        ? Banner(
+                            location: BannerLocation.topEnd,
+                            color: Colors.deepPurple,
+                            message:
+                                'x${article!.countingUnit} ${article!.referenceUnit}',
+                            child: ArticleNumberPicker(currentValue: number))
+                        : ArticleNumberPicker(currentValue: number),
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
                         focusNode: node,
@@ -57,45 +61,60 @@ class AddArticleCount extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(20))),
                         ),
                       ),
-                    )
-                  : const SizedBox.shrink(),
-              article != null
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ValueListenableBuilder(
-                        valueListenable: peremption,
-                        builder: (context, value, child) {
-                          return DateTimeFormField(
-                            onDateSelected: (date) => peremption.value = date,
-                            dateTextStyle: const TextStyle(color: Colors.black),
-                            initialEntryMode: DatePickerEntryMode.calendar,
-                            initialDate: peremption.value,
-                            dateFormat: DateFormat('dd-MM-yyyy'),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: const BorderSide(),
-                                borderRadius: BorderRadius.circular(20),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ValueListenableBuilder(
+                          valueListenable: peremption,
+                          builder: (context, value, child) {
+                            return DateTimeFormField(
+                              onDateSelected: (date) => peremption.value = date,
+                              dateTextStyle:
+                                  const TextStyle(color: Colors.black),
+                              initialEntryMode: DatePickerEntryMode.calendar,
+                              initialDate: peremption.value,
+                              dateFormat: DateFormat('dd-MM-yyyy'),
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                labelText: 'peremption'.tr,
+                                prefixIcon: const Icon(
+                                  Icons.date_range,
+                                  color: Colors.black,
+                                ),
                               ),
-                              labelText: 'peremption'.tr,
-                              prefixIcon: const Icon(
-                                Icons.date_range,
-                                color: Colors.black,
-                              ),
-                            ),
-                            mode: DateTimeFieldPickerMode.date,
-                          );
-                        },
-                      ))
-                  : const SizedBox.shrink(),
-              codeBar != null
-                  ? MaterialButton(
-                      onPressed: onPressed,
-                      child: Text(article != null ? 'add'.tr : 'back'.tr),
-                    )
-                  : const SizedBox.shrink()
-            ],
-          ),
-        ),
+                              mode: DateTimeFieldPickerMode.date,
+                            );
+                          },
+                        )),
+                    const Divider(color: Colors.transparent),
+                    codeBar != null
+                        ? MaterialButton(
+                            onPressed: onPressed,
+                            child: Text('add'.tr),
+                          )
+                        : const SizedBox.shrink()
+                  ],
+                ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(child: codeBar ?? const SizedBox.shrink()),
+                  ),
+                  const Divider(color: Colors.transparent),
+                  codeBar != null
+                      ? MaterialButton(
+                          onPressed: onPressed,
+                          child: Text('back'.tr),
+                        )
+                      : const SizedBox.shrink()
+                ],
+              ),
       ),
     );
   }

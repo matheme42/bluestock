@@ -61,10 +61,11 @@ class Inventory extends Model {
     await InventoryController().update(this);
   }
 
-  Future<File> generateCsv() async {
+  Future<File> generateCsv(String imei) async {
     final directory = await getApplicationDocumentsDirectory();
     final path = directory.path;
-    final fileName = site.name.toUpperCase();
+    final fileName =
+        "${site.name.toUpperCase()}-${DateFormat('dd-MM-yyyy').format(date)}-$imei";
     final filePath = '$path/$fileName.csv';
     final file = File(filePath);
     if (await file.exists()) {

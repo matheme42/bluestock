@@ -16,7 +16,6 @@ class SharedPreferenceController {
 
   static const String _cameraFocusKeys = "camera_focus_keys";
 
-
   static Future<Locale> getLanguage() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? languageString = preferences.getString(_languageKeys);

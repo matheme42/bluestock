@@ -1,3 +1,4 @@
+import 'package:bluestock/context/context.dart';
 import 'package:bluestock/widgets/accordeon/accordion.dart';
 import 'package:bluestock/widgets/accordeon/controllers.dart';
 import 'package:bluestock/widgets/code_image/code_bar_demonstator.dart';
@@ -47,6 +48,19 @@ class HelpBluestock extends StatelessWidget {
               header: Text('supported_barcode'.tr,
                   style: const TextStyle(color: Colors.white70)),
               content: const CodeBarDemonstrator(),
+              contentHorizontalPadding: 20,
+              contentBorderWidth: 1,
+            ),
+            AccordionSection(
+              isOpen: false,
+              leftIcon: const Icon(Icons.perm_device_information,
+                  color: Colors.white),
+              headerBackgroundColor: Colors.blue,
+              headerBackgroundColorOpened: Colors.deepPurple,
+              header:
+                  const Text('Imei', style: TextStyle(color: Colors.white70)),
+              content: Text(BluestockContext.of(context).imeiNo,
+                  style: _contentStyle),
               contentHorizontalPadding: 20,
               contentBorderWidth: 1,
             ),

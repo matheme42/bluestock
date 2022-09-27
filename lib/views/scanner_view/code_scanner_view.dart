@@ -183,7 +183,7 @@ class BarcodeScannerState extends State<BarcodeScanner> {
                   }
 
                   appContext.scannerController.stop();
-                  Future.delayed(const Duration(milliseconds: 200))
+                  Future.delayed(const Duration(milliseconds: 100))
                       .then((value) {
                     onDetect(barcode.rawValue, barcode.format.toString());
                     checkBarcodeOffsetInProgress = false;
