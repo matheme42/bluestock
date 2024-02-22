@@ -1,0 +1,6 @@
+Process;Code produit du livret;Denomination commerciale;DCI;Denomination interne;Famille;Sous-famille;Unite de comptage;Unite de reference;Reference marque / laboratoire;Code Barre/Qrcode
+PUI;1234;Tapis de yoga;;produit 1;Famille 1;Bistouris;1;;1;$R8888
+PUI;5678;Montre intelligente;;produit 2      ;Famille 2;Bistouris;1;bistouri;2;$R7043
+PUI;21;Sac à dos imperméable;;produit 3;Famille 1;Sutures;6;bistouri;3;$R5432
+PUI;9432;Kit de démarrage pour jardinage en pot;;produit 4;Famille 2;Sutures;1;Suture;4;$R5654
+PUI;9435;Bluestock;;Bluestock;Famille 1;Bluestock;6;;7;$R9765

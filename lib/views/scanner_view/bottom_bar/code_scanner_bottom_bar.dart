@@ -5,7 +5,7 @@ import 'package:bluestock/models/models.dart';
 import 'package:bluestock/views/scanner_view/bottom_bar/tabs/add_article_count.dart';
 import 'package:bluestock/views/scanner_view/bottom_bar/tabs/article_info.dart';
 import 'package:bluestock/views/scanner_view/bottom_bar/tabs/code_scanner_list.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:tab_container/tab_container.dart';
 
 class ScannerBottomBar extends StatefulWidget {
