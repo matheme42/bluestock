@@ -1,13 +1,12 @@
 # Bluestock
 
-Il s'agit d'une petite application d'inventaire créer selon les besoins et le cahier des charges du groupe Aural:
-https://www.auralyon.org/fr/aural/presentation.html.
+Il s'agit d'une petite application d'inventaire créée selon les besoins et le cahier des charges du groupe Aural : [lien vers le groupe Aural](https://www.auralyon.org/fr/aural/presentation.html.
+).
 
-L'application prend en charge la lecture des code barres & code QR suivants:
-Code128 (A - B - C) - Code39 - Code93 - itf - itf14 - itf16 - upcA - upcE - isbn - codabar - pdf417 - aztec - dataMatrix - qrCode
+L'application prend en charge la lecture des codes-barres et des codes QR suivants :
+Code128 (A - B - C) - Code39 - Code93 - ITF - ITF14 - ITF16 - UPC-A - UPC-E - ISBN - Codabar - PDF417 - Aztec - DataMatrix - QR Code
 
-Lien playstore: https://play.google.com/store/apps/details?id=com.theme.bluestock
-
+Lien Play Store : [lien vers Play Store](https://play.google.com/store/apps/details?id=com.theme.bluestoc)
 
 ![alt text](readme_images/bluestock_exemple.gif)
 
@@ -20,15 +19,15 @@ Engine • revision 1837b5be5f
 Tools • Dart 2.19.4 • DevTools 2.20.1
 ```
 
-Pour compiler et lancer le project lancer les commande suivantes :
+Pour compiler et lancer le projet, lancez les commandes suivantes :
 - `flutter clean`
 - `flutter pub get`
 - `flutter pub upgrade`
 - `flutter run`
 
-En mode Release il faudra remplir le fichier android/key.properties pour pouvoir compiler ou modifier la compilation du mode release.
+En mode Release, il faudra remplir le fichier android/key.properties pour pouvoir compiler ou modifier la compilation du mode Release.
 
-Une fois lancer vous pourrez utiliser les fichier d'exemple pour tester l'application
+Une fois lancée, vous pourrez utiliser les fichiers d'exemple pour tester l'application.
 
 ## images de l'application
 
