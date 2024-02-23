@@ -1,12 +1,12 @@
 # Bluestock
 
-Il s'agit d'une petite application d'inventaire créée selon les besoins et le cahier des charges du groupe Aural : [lien vers le groupe Aural](https://www.auralyon.org/fr/aural/presentation.html.
+Il s'agit d'une petite application d'inventaire créée selon les besoins et le cahier des charges du groupe Aural : [lien vers le groupe Aural](https://www.auralyon.org/fr/aural/presentation.html
 ).
 
 L'application prend en charge la lecture des codes-barres et des codes QR suivants :
 Code128 (A - B - C) - Code39 - Code93 - ITF - ITF14 - ITF16 - UPC-A - UPC-E - ISBN - Codabar - PDF417 - Aztec - DataMatrix - QR Code
 
-Lien Play Store : [lien vers Play Store](https://play.google.com/store/apps/details?id=com.theme.bluestoc)
+Lien Play Store : [lien vers Play Store](https://play.google.com/store/apps/details?id=com.theme.bluestock)
 
 ![alt text](readme_images/bluestock_exemple.gif)
 
